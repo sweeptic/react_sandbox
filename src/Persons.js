@@ -1,5 +1,6 @@
 import Person from './Person';
 import React from 'react'
+import { AuthContext } from './App';
 
 const Persons = (props) => {
    let person = null;
@@ -20,6 +21,9 @@ const Persons = (props) => {
 
    return (
       <div>
+         <AuthContext.Consumer>
+            {auth => auth ? <p style={{ backgroundColor: 'lightblue' }}>authenticated!</p> : <p>please log in</p>}
+         </AuthContext.Consumer>
          {person}
       </div>
    )

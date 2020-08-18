@@ -2,13 +2,16 @@ import Persons from './Persons';
 import React, { PureComponent } from 'react'
 import data from '../src/data/data.json'
 
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = ({
       data: null,
       showPerson: false,
-      clickCounter: 0
+      clickCounter: 0,
+      authenticated: false
     })
   }
 
@@ -17,10 +20,6 @@ class App extends PureComponent {
     this.setState(() => ({
       data: componentData
     }))
-  }
-
-  componentDidUpdate() {
-    console.log('component did update')
   }
 
   personClickHandler = () => {
@@ -49,7 +48,6 @@ class App extends PureComponent {
 
   deleteHandler = (id) => {
     const personIndex = [...this.state.data].findIndex(item => item.id === id);
-    console.log(id)
     const postList = [...this.state.data];
     postList.splice(personIndex, 1);
     this.setState((prevState, props) => ({
@@ -57,8 +55,13 @@ class App extends PureComponent {
     }))
   }
 
+  loginHandler = () => {
+    this.setState((prevState, props) => ({
+      authenticated: !prevState.authenticated
+    }))
+  }
+
   render() {
-    console.log('render')
     let persons = this.state.showPerson ? (
       <Persons
         data={this.state.data}
@@ -68,9 +71,14 @@ class App extends PureComponent {
     return (
       <div>
         <p>{this.state.clickCounter}</p>
+        <button onClick={this.loginHandler}>Login / Logout</button>
         <button onClick={this.personToggleHandler}>Toggle Persons</button>
         <button onClick={this.personClickHandler}>Show Persons</button>
-        {persons}
+        <AuthContext.Provider value={this.state.authenticated}>
+          {persons}
+        </AuthContext.Provider>
+
+
       </div>
     )
   }
