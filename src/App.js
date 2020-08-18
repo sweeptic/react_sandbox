@@ -2,8 +2,6 @@ import Persons from './Persons';
 import React, { PureComponent } from 'react'
 import data from '../src/data/data.json'
 import MouseTracker from './MouseTracker';
-import Person from './Person';
-
 
 export const AuthContext = React.createContext(false);
 
@@ -67,39 +65,35 @@ class App extends PureComponent {
   }
 
   areaClickHandler = () => {
+
     this.setState((prevState, props) => ({
       greenArea: !prevState.greenArea
     }))
   }
 
-  renderPerson = () => <Person />
-
   render() {
-    // let persons = this.state.showPerson ? (
-    //   <Persons
-    //   // data={this.state.data}
-    //   // onChangeHandler={this.personTitleChangeHandler}
-    //   // deleteHandler={this.deleteHandler}
-    //   />
-    // ) : null;
+    let persons = this.state.showPerson ? (
+      <Persons
+        data={this.state.data}
+        onChangeHandler={this.personTitleChangeHandler}
+        deleteHandler={this.deleteHandler}
+      />
+      ) : null;
 
     let greenArea = this.state.greenArea ? <MouseTracker /> : null;
-    let personArea = this.state.showPerson ? <Persons render={this.renderPerson} /> : null;
+
 
     return (
       <div>
+        {greenArea}
         <p>{this.state.clickCounter}</p>
         <button onClick={this.loginHandler}>Login / Logout</button>
         <button onClick={this.personToggleHandler}>Toggle Persons</button>
         <button onClick={this.personClickHandler}>Show Persons</button>
         <button onClick={this.areaClickHandler}>Toggle green area</button>
-        {greenArea}
-        {/* <AuthContext.Provider value={this.state.authenticated}>
+        <AuthContext.Provider value={this.state.authenticated}>
           {persons}
-        </AuthContext.Provider> */}
-        {/* <Persons render={this.renderPersons} /> */}
-        {personArea}
-
+        </AuthContext.Provider>
       </div>
     )
   }
