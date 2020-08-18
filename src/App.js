@@ -12,6 +12,7 @@ class App extends PureComponent {
       data: null,
       showPerson: false,
       clickCounter: 0,
+      greenArea: false,
       authenticated: false,
       x: 0,
       y: 0
@@ -63,20 +64,32 @@ class App extends PureComponent {
     }))
   }
 
+  areaClickHandler = () => {
+
+    this.setState((prevState, props) => ({
+      greenArea: !prevState.greenArea
+    }))
+  }
+
   render() {
     let persons = this.state.showPerson ? (
       <Persons
         data={this.state.data}
         onChangeHandler={this.personTitleChangeHandler}
-        deleteHandler={this.deleteHandler} />) : null;
+        deleteHandler={this.deleteHandler}
+      />) : null;
+
+    let greenArea = this.state.greenArea ? <MouseTracker /> : null;
+
 
     return (
       <div>
-        <MouseTracker />
+        {greenArea}
         <p>{this.state.clickCounter}</p>
         <button onClick={this.loginHandler}>Login / Logout</button>
         <button onClick={this.personToggleHandler}>Toggle Persons</button>
         <button onClick={this.personClickHandler}>Show Persons</button>
+        <button onClick={this.areaClickHandler}>Toggle green area</button>
         <AuthContext.Provider value={this.state.authenticated}>
           {persons}
         </AuthContext.Provider>
