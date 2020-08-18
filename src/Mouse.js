@@ -22,7 +22,7 @@ export default class Mouse extends PureComponent {
          <div
             style={{ height: '20vh', backgroundColor: 'lightgreen' }}
             onMouseMove={this.handleMouseMove}>
-            {/* <p>The current mouse position is ({this.state.x}, {this.state.y}</p> */}
+            <p>The current mouse position is ({this.state.x}, {this.state.y}</p>
             {/* <Cat mouse={this.state}/> */}
             {this.props.render(this.state)}
          </div>
