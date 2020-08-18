@@ -1,6 +1,7 @@
 import Persons from './Persons';
 import React, { PureComponent } from 'react'
 import data from '../src/data/data.json'
+import MouseTracker from './MouseTracker';
 
 export const AuthContext = React.createContext(false);
 
@@ -11,7 +12,9 @@ class App extends PureComponent {
       data: null,
       showPerson: false,
       clickCounter: 0,
-      authenticated: false
+      authenticated: false,
+      x: 0,
+      y: 0
     })
   }
 
@@ -46,10 +49,9 @@ class App extends PureComponent {
     }))
   }
 
-  deleteHandler = (id) => {
-    const personIndex = [...this.state.data].findIndex(item => item.id === id);
+  deleteHandler = (index) => {
     const postList = [...this.state.data];
-    postList.splice(personIndex, 1);
+    postList.splice(index, 1);
     this.setState((prevState, props) => ({
       data: postList
     }))
@@ -70,6 +72,7 @@ class App extends PureComponent {
 
     return (
       <div>
+        <MouseTracker />
         <p>{this.state.clickCounter}</p>
         <button onClick={this.loginHandler}>Login / Logout</button>
         <button onClick={this.personToggleHandler}>Toggle Persons</button>
@@ -77,8 +80,6 @@ class App extends PureComponent {
         <AuthContext.Provider value={this.state.authenticated}>
           {persons}
         </AuthContext.Provider>
-
-
       </div>
     )
   }

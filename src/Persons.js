@@ -6,15 +6,15 @@ const Persons = (props) => {
    let person = null;
 
    if (props.data !== null) {
-      person = props.data.map(item => {
+      person = props.data.map((item, index) => {
          return (
-            <Person
+            <Person              
                id={item.id}
                title={item.title}
                body={item.body}
                key={item.id}
                onChangeHandler={(event) => props.onChangeHandler(event, item.id)}
-               deleteHandler={() => props.deleteHandler(item.id)} />
+               deleteHandler={() => props.deleteHandler(index)} />
          )
       })
    }
