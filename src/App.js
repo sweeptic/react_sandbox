@@ -2,8 +2,13 @@ import Persons from './Persons';
 import React, { PureComponent } from 'react'
 import data from '../src/data/data.json'
 import MouseTracker from './MouseTracker';
+import Login from './Login';
+import Profile from './Profile';
 
-export const AuthContext = React.createContext(false);
+export const AuthContext = React.createContext({
+  isAuth: false,
+  toggleAuth: () => { }
+});
 
 class App extends PureComponent {
   constructor(props) {
@@ -28,7 +33,8 @@ class App extends PureComponent {
 
   personClickHandler = () => {
     this.setState((prevState, props) => ({
-      showPerson: true
+      showPerson: true,
+      clickCounter: prevState.clickCounter + 1
     }))
   }
 
@@ -65,7 +71,6 @@ class App extends PureComponent {
   }
 
   areaClickHandler = () => {
-
     this.setState((prevState, props) => ({
       greenArea: !prevState.greenArea
     }))
@@ -78,20 +83,22 @@ class App extends PureComponent {
         onChangeHandler={this.personTitleChangeHandler}
         deleteHandler={this.deleteHandler}
       />
-      ) : null;
+    ) : null;
 
     let greenArea = this.state.greenArea ? <MouseTracker /> : null;
 
 
     return (
       <div>
+        <h1>Data From Local File</h1>
         {greenArea}
-        <p>{this.state.clickCounter}</p>
-        <button onClick={this.loginHandler}>Login / Logout</button>
-        <button onClick={this.personToggleHandler}>Toggle Persons</button>
-        <button onClick={this.personClickHandler}>Show Persons</button>
-        <button onClick={this.areaClickHandler}>Toggle green area</button>
-        <AuthContext.Provider value={this.state.authenticated}>
+        <p>Click counter: {this.state.clickCounter}</p>
+        <button onClick={this.personToggleHandler}>Toggle Persons <br />show/hide</button>
+        <button onClick={this.personClickHandler}>Show Persons <br />(purecomponent)</button>
+        <button onClick={this.areaClickHandler}>Toggle green area <br />(render prop)</button>
+        <AuthContext.Provider value={{ isAuth: this.state.authenticated, toggleAuth: this.loginHandler }}>
+          <Login />
+          <Profile />
           {persons}
         </AuthContext.Provider>
       </div>

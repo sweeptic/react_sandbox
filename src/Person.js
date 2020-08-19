@@ -1,4 +1,5 @@
 import React from 'react'
+import Profile from './Profile'
 
 const Person = (props) => {
    return (
@@ -14,6 +15,7 @@ const Person = (props) => {
          <button
             onClick={props.deleteHandler}
             style={{ backgroundColor: 'orange' }}>delete this</button>
+             <Profile/>
       </div>
    )
 }

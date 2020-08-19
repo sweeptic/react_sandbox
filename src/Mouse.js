@@ -17,7 +17,7 @@ export default class Mouse extends PureComponent {
    }
 
    render() {
-      console.log('render')
+      // console.log('render')
       return (
          <div
             style={{ height: '20vh', backgroundColor: 'lightgreen' }}

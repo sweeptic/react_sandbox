@@ -7,10 +7,10 @@ export default class MouseTracker extends Component {
    renderTheCat = cord => <Cat mouse={cord} />
 
    render() {
-      console.log('mousetracker render')
+      // console.log('mousetracker render')
       return (
          <>
-            <h1>Move mouse around!</h1>
+            <h2>Move mouse around!</h2>
 
             {/* <Mouse render={(cord) => (
                <Cat mouse={cord} />
