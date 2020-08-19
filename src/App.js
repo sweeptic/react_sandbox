@@ -4,11 +4,8 @@ import data from '../src/data/data.json'
 import MouseTracker from './MouseTracker';
 import Login from './Login';
 import Profile from './Profile';
+import AuthContext from './Auth-context';
 
-export const AuthContext = React.createContext({
-  isAuth: false,
-  toggleAuth: () => { }
-});
 
 class App extends PureComponent {
   constructor(props) {
@@ -18,11 +15,11 @@ class App extends PureComponent {
       showPerson: false,
       clickCounter: 0,
       greenArea: false,
-      authenticated: false,
+      isAuth: false,
       x: 0,
       y: 0
     })
-  }
+  } 
 
   componentDidMount() {
     const componentData = data;
@@ -64,9 +61,9 @@ class App extends PureComponent {
     }))
   }
 
-  loginHandler = () => {
+  toggleAuth = () => {
     this.setState((prevState, props) => ({
-      authenticated: !prevState.authenticated
+      isAuth: !prevState.isAuth
     }))
   }
 
@@ -96,7 +93,7 @@ class App extends PureComponent {
         <button onClick={this.personToggleHandler}>Toggle Persons <br />show/hide</button>
         <button onClick={this.personClickHandler}>Show Persons <br />(purecomponent)</button>
         <button onClick={this.areaClickHandler}>Toggle green area <br />(render prop)</button>
-        <AuthContext.Provider value={{ isAuth: this.state.authenticated, toggleAuth: this.loginHandler }}>
+        <AuthContext.Provider value={{ isAuth: this.state.isAuth, toggleAuth: this.toggleAuth }}>
           <Login />
           <Profile />
           {persons}
