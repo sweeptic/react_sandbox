@@ -5,6 +5,7 @@ import MouseTracker from './MouseTracker';
 import Login from './Login';
 import Profile from './Profile';
 import AuthContext from './Auth-context';
+import Page from './Page';
 
 
 class App extends PureComponent {
@@ -19,7 +20,7 @@ class App extends PureComponent {
       x: 0,
       y: 0
     })
-  } 
+  }
 
   componentDidMount() {
     const componentData = data;
@@ -83,12 +84,13 @@ class App extends PureComponent {
     ) : null;
 
     let greenArea = this.state.greenArea ? <MouseTracker /> : null;
-
+    const avatarSize = 40;
 
     return (
       <div>
         <h1>Data From Local File</h1>
         {greenArea}
+        <Page avatarSize={avatarSize}/>
         <p>Click counter: {this.state.clickCounter}</p>
         <button onClick={this.personToggleHandler}>Toggle Persons <br />show/hide</button>
         <button onClick={this.personClickHandler}>Show Persons <br />(purecomponent)</button>
