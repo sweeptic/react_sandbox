@@ -4,7 +4,7 @@ import NavigationBar from './NavigationBar'
 const PageLayout = (props) => {
    return (
       <div>
-         <NavigationBar avatarSize={props.avatarSize}/>
+         <NavigationBar avatar={props.avatar}/>
       </div>
    )
 }

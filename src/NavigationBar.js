@@ -4,7 +4,7 @@ import Avatar from './Avatar'
 const NavigationBar = (props) => {
    return (
       <div>
-         <Avatar avatarSize={props.avatarSize}/>
+         {props.avatar}
       </div>
    )
 }
