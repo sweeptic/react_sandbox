@@ -6,11 +6,21 @@ import Login from './Login';
 import Profile from './Profile';
 import AuthContext from './Auth-context';
 import Page from './Page';
+import ThemedButton from './themed-button';
+import { ThemeContext, themes } from './theme-context';
 
+function Toolbar(props) {
+  return (
+    <ThemedButton onClick={props.changeTheme}>
+      Change Theme <br /> using context
+    </ThemedButton>
+  );
+}
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
+
     this.state = ({
       data: null,
       showPerson: false,
@@ -18,9 +28,29 @@ class App extends PureComponent {
       greenArea: false,
       isAuth: false,
       x: 0,
-      y: 0
+      y: 0,
+      theme: themes.light,
     })
+
+    // this.toggleTheme = () => {
+    //   this.setState(state => ({
+    //     theme:
+    //       state.theme === themes.dark
+    //         ? themes.light
+    //         : themes.dark,
+    //   }));
+    // };
+
   }
+
+  toggleTheme = () => {
+    this.setState(state => ({
+      theme:
+        state.theme === themes.dark
+          ? themes.light
+          : themes.dark,
+    }));
+  };
 
   componentDidMount() {
     const componentData = data;
@@ -84,17 +114,28 @@ class App extends PureComponent {
     ) : null;
 
     let greenArea = this.state.greenArea ? <MouseTracker /> : null;
-    const avatarSize = 40;
+    // const avatarSize = 40;
 
     return (
       <div>
         <h1>Data From Local File</h1>
         {greenArea}
-        <Page avatarSize={avatarSize}/>
+        <Page />
         <p>Click counter: {this.state.clickCounter}</p>
-        <button onClick={this.personToggleHandler}>Toggle Persons <br />show/hide</button>
-        <button onClick={this.personClickHandler}>Show Persons <br />(purecomponent)</button>
-        <button onClick={this.areaClickHandler}>Toggle green area <br />(render prop)</button>
+
+        <ThemeContext.Provider value={this.state.theme}>
+          <Toolbar changeTheme={this.toggleTheme} />
+
+
+
+
+          <button onClick={this.personToggleHandler}>Toggle Persons <br />show/hide</button>
+
+          <ThemedButton>Im Themed Button <br/> change theme!</ThemedButton>
+
+          <button onClick={this.personClickHandler}>Show Persons <br />(purecomponent)</button>
+          <button onClick={this.areaClickHandler}>Toggle green area <br />(render prop)</button>
+        </ThemeContext.Provider>
         <AuthContext.Provider value={{ isAuth: this.state.isAuth, toggleAuth: this.toggleAuth }}>
           <Login />
           <Profile />

@@ -5,7 +5,7 @@ class Login extends Component {
    static contextType = AuthContext;
 
    componentDidMount(){
-      console.log(this.context)
+      // console.log(this.context)
    }
 
    render() {
