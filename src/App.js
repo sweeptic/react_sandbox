@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Local from './FromLocal'
 import NavbarComponent from './Navbar'
 
 

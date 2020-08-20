@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { NavLink, Switch, Route } from 'react-router-dom'
-import FromLocal from './FromLocal'
-import FromServer from './FromServer'
-import FromRedux from './FromRedux'
-import FromForms from './FromForms'
+import Homepage from './Homepage'
+
+
+const FromLocal = React.lazy(() => import('./FromLocal'))
+const FromServer = React.lazy(() => import('./FromServer'))
+const FromRedux = React.lazy(() => import('./FromRedux'))
+const FromForms = React.lazy(() => import('./FromForms'))
+
 
 const NavbarComponent = () => {
 
@@ -19,10 +23,10 @@ const NavbarComponent = () => {
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
                      <Nav className="ml-auto">
-                        <Nav.Link as={NavLink} to="/link1/" activeStyle={myActiveStyle}>Data from local file</Nav.Link>
-                        <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>Data from server</Nav.Link>
-                        <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>Forms</Nav.Link>
-                        <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Redux</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>Data from local file(async)</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>Data from server</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Forms</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link5/" activeStyle={myActiveStyle}>Redux</Nav.Link>
                         {/* <Nav.Link as={NavLink} activeStyle={myActiveStyle} to={{
                            pathname: '/new-post',
                            hash: '#submit',
@@ -35,11 +39,17 @@ const NavbarComponent = () => {
          </header>
 
          <Switch>
-            <Route path="/link1" component={FromLocal} />
-            <Route path="/link2" component={FromServer} />
-            <Route path="/link3" component={FromForms} />
-            <Route path="/link4" component={FromRedux} />
-            <Route render={() => <h1>Not found</h1>}/>
+            <Route path="/" component={Homepage} exact />
+
+            <Route path="/link2" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromLocal /></Suspense>} />
+            <Route path="/link3" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromServer /></Suspense>} />
+            <Route path="/link4" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromForms /></Suspense>} />
+            <Route path="/link5" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromRedux /></Suspense>} />
+            <Route render={() => <h1>Not found</h1>} />
          </Switch>
 
       </React.Fragment>
