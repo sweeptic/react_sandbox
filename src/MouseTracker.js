@@ -4,6 +4,7 @@ import Cat from './Cat'
 
 export default class MouseTracker extends Component {
 
+   // inject this function to mouse trough render attribut
    renderTheCat = cord => <Cat mouse={cord} />
 
    render() {
