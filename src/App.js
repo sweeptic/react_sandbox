@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Local from './Local'
+import Local from './FromLocal'
 import NavbarComponent from './Navbar'
 
 
@@ -8,7 +8,6 @@ export default class App extends Component {
     return (
       <div>
         <NavbarComponent />
-        <Local />
       </div>
     )
   }
