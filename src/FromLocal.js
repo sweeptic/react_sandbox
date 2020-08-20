@@ -119,7 +119,7 @@ class Local extends PureComponent {
     return (
 
       <div>
-        <div style={{ paddingTop: '70px' }}>
+        <div>
           <h1>Data From Local File</h1>
           {greenArea}
           <Page />

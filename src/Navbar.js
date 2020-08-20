@@ -12,7 +12,7 @@ const NavbarComponent = () => {
 
    return (
       <React.Fragment>
-         <header>
+         <header style={{ paddingBottom: '70px' }}>
             <Navbar style={{ width: '100vw', overflowX: 'hidden' }} fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                <Container >
                   <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -39,8 +39,9 @@ const NavbarComponent = () => {
             <Route path="/link2" component={FromServer} />
             <Route path="/link3" component={FromForms} />
             <Route path="/link4" component={FromRedux} />
+            <Route render={() => <h1>Not found</h1>}/>
          </Switch>
-         
+
       </React.Fragment>
    )
 }
