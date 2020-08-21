@@ -4,10 +4,10 @@ import FullProduct from './FullProduct'
 import NewProduct from './NewProduct'
 import Axios from 'axios'
 
-
 export default class FromServer extends Component {
    state = {
-      products: []
+      products: [],
+      selectedProdId: null
    }
 
    componentDidMount() {
@@ -20,18 +20,24 @@ export default class FromServer extends Component {
          })
    }
 
+   productSelectHandler = (id) => {
+      this.setState({
+         selectedProdId: id
+      })
+   }
 
    render() {
-      console.log(this.state.products)
       const products = this.state.products.map((item, index) => {
          return (
             <Product
                productName={item.productName}
                key={index}
+               clicked={() => this.productSelectHandler(item.id)}
             />
          )
+      }).slice(0,3)
 
-      })
+console.log(this.state.selectedProdId)      
 
       return (
          <div className="container">
@@ -39,7 +45,7 @@ export default class FromServer extends Component {
                {products}
             </div>
             <section>
-               <FullProduct />
+               <FullProduct id={this.state.selectedProdId}  />
             </section>
             <section>
                <NewProduct />
