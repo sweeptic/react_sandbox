@@ -37,8 +37,6 @@ export default class FromServer extends Component {
          )
       }).slice(0,3)
 
-console.log(this.state.selectedProdId)      
-
       return (
          <div className="container">
             <div className="row">
