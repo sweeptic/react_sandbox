@@ -1,6 +1,8 @@
 import Person from './Person';
 import React from 'react'
 
+
+
 const Persons = (props) => {
    let person = null;
 

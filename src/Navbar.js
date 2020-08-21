@@ -23,6 +23,8 @@ const NavbarComponent = () => {
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
                      <Nav className="ml-auto">
+
+                        <Nav.Link as={NavLink} to="/" exact activeStyle={myActiveStyle}>welcome</Nav.Link>
                         <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>Data from local file(async)</Nav.Link>
                         <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>Data from server</Nav.Link>
                         <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Forms</Nav.Link>
@@ -32,6 +34,7 @@ const NavbarComponent = () => {
                            hash: '#submit',
                            search: '?quick-submit=true'
                         }}>New Post</Nav.Link> */}
+                        
                      </Nav>
                   </Navbar.Collapse>
                </Container>
@@ -39,10 +42,10 @@ const NavbarComponent = () => {
          </header>
 
          <Switch>
-            <Route path="/" component={Homepage} exact />
+            <Route exact path="/" component={Homepage}  />
 
-            <Route path="/link2" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromLocal /></Suspense>} />
+            <Route path="/link2" render={(props) =>
+               <Suspense fallback={<div>Loading...</div>}><FromLocal {...props} /></Suspense>} />
             <Route path="/link3" render={() =>
                <Suspense fallback={<div>Loading...</div>}><FromServer /></Suspense>} />
             <Route path="/link4" render={() =>

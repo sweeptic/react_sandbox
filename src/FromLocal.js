@@ -104,6 +104,7 @@ class Local extends PureComponent {
     }))
   }
 
+
   render() {
     let persons = this.state.showPerson ? (
       <Persons
@@ -139,7 +140,7 @@ class Local extends PureComponent {
         </div>
       </div>
 
-      
+
     )
   }
 }

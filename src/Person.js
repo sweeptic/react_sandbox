@@ -1,5 +1,6 @@
 import React from 'react'
 import Profile from './Profile'
+import { withRouter } from 'react-router-dom';
 
 const Person = (props) => {
    return (
@@ -15,9 +16,10 @@ const Person = (props) => {
          <button
             onClick={props.deleteHandler}
             style={{ backgroundColor: 'orange' }}>delete this</button>
-             <Profile/>
+         <p>path: {props.location.pathname}</p>
+         <Profile />
       </div>
    )
 }
 
-export default Person
+export default withRouter(Person)
