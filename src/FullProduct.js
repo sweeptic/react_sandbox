@@ -33,7 +33,7 @@ export default class FullProduct extends Component {
                <div className="card-body">
                   <img className="card-img-top img-fluid" src="https://source.unsplash.com/random/301x200" alt="" />
                   <h4 className="card-title">{this.state.loadedPost.productName}</h4>
-                  <h6 className="card-subtitle text-muted">Card subtitle</h6>
+                  <h6 className="card-subtitle text-muted"></h6>
                   <p className="card-text">{this.state.loadedPost.productInfo}</p>
                   <a className="btn btn-outline-danger" href="#">Delete</a>
                </div>

@@ -1,49 +1,65 @@
 import React, { Component } from 'react'
+import Axios from 'axios'
 
 export default class NewProduct extends Component {
    state = {
-      title: '',
-      content: '',
-      author: 'admin'
+      id: '',              //0, 1 ,2 ...
+      productInfo: '',
+      productName: '',
+      userId: ''           //1-2
    }
+
+   postDataHandler = () => {
+      const data = {
+         id: '',
+         productInfo: this.state.productInfo,
+         productName: this.state.productName,
+         userId: this.state.userId
+      }
+
+      Axios.post("https://react-http-cec91.firebaseio.com/product.json", data)
+         .then(response => {
+            // console.log(response)
+         })
+   }
+
 
    render() {
       return (
-
          <div className="card p-4 mt-3">
-               <div className="card-body">
-                  <h3 className="text-center">New Post</h3>
-                  <hr />
-                  <div className="row">
-                     <div className="col-md-6">
-                        <div className="form-group">
-                           <input type="text" className="form-control" placeholder="Title" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} />
-                        </div>
-                     </div>
-                     <div className="col-md-6">
-                        <div className="form-group">
-                           <select value={this.state.author} className="form-control" onChange={(event) => this.setState({ author: event.target.value })}>
-                              <option value="Max">Max</option>
-                              <option value="Anna">Anna</option>
-                           </select>
-                        </div>
+            <div className="card-body">
+               <h3 className="text-center">New Post</h3>
+               <hr />
+               <div className="row">
+                  <div className="col-md-6">
+                     <div className="form-group">
+                        <input type="text" className="form-control" placeholder="Product Name" value={this.state.productName} onChange={(event) => this.setState({ productName: event.target.value })} />
                      </div>
                   </div>
-                  <div className="row">
-                     <div className="col-md-12">
-                        <div className="form-group">
-                           <textarea value={this.state.body} className="form-control" placeholder="Blog Post" onChange={(event) => this.setState({ body: event.target.value })}></textarea>
-                        </div>
+                  <div className="col-md-6">
+                     <div className="form-group">
+                        <select value={this.state.userId} className="form-control" onChange={(event) => this.setState({ userId: event.target.value })}>
+                           <option value="Max">Max</option>
+                           <option value="Anna">Anna</option>
+                        </select>
                      </div>
-                     <div className="col-md-12">
-                        <div className="form-group">
-                           <input onClick={this.postDataHandler} type="submit" value="Submit" className="btn btn-danger btn-block" />
-                        </div>
+                  </div>
+               </div>
+               <div className="row">
+                  <div className="col-md-12">
+                     <div className="form-group">
+                        <textarea value={this.state.productInfo} className="form-control" placeholder="Product Info" onChange={(event) => this.setState({ productInfo: event.target.value })}></textarea>
+                     </div>
+                  </div>
+                  <div className="col-md-12">
+                     <div className="form-group">
+                        <input onClick={this.postDataHandler} type="submit" value="Submit" className="btn btn-danger btn-block" />
                      </div>
                   </div>
                </div>
             </div>
-        
+         </div>
+
       )
    }
 }

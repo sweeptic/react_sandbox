@@ -26,24 +26,42 @@ export default class FromServer extends Component {
       })
    }
 
+   deletePostHandler = (id) => {
+      console.log('delete ', id);
+      Axios.delete("https://react-http-cec91.firebaseio.com/product/" + this.state.selectedProdId + ".json")
+         .then(response => {
+            console.log(response)
+         })
+   }
+
    render() {
-      const products = this.state.products.map((item, index) => {
+      // console.log(this.state.products)
+
+      const prod = this.state.products;
+      let products = null;
+      products = Object.keys(prod).map(item => prod[item])
+
+      // console.log(products)
+
+
+      const products_ = products.map((item, index) => {
          return (
             <Product
                productName={item.productName}
                key={index}
                clicked={() => this.productSelectHandler(item.id)}
+               deletePostHandler={this.deletePostHandler}
             />
          )
-      }).slice(0,3)
+      })
 
       return (
          <div className="container">
             <div className="row">
-               {products}
+               {products_}
             </div>
             <section>
-               <FullProduct id={this.state.selectedProdId}  />
+               <FullProduct id={this.state.selectedProdId} />
             </section>
             <section>
                <NewProduct />
