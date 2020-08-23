@@ -26,6 +26,7 @@ export default class NewProductRoute extends Component {
 
    render() {
       return (
+         <div className="container">
          <div className="card p-4 mt-3">
             <div className="card-body">
                <h3 className="text-center">New Post</h3>
@@ -58,6 +59,7 @@ export default class NewProductRoute extends Component {
                   </div>
                </div>
             </div>
+         </div>
          </div>
 
       )

@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 
-export default class FullProduct extends Component {
+export default class FullProductRoute extends Component {
    state = {
       loadedPost: null
    }
 
-   componentDidUpdate() {
-      if (this.props.id !== null) {
-         if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
+   componentDidMount() {
+      if (this.props.match.params.id !== null) {
+         if (!this.state.loadedPost ||
+            (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id)) {
             Axios
-               .get("https://react-http-cec91.firebaseio.com/product/" + this.props.id + ".json")
+               .get("https://react-http-cec91.firebaseio.com/product/" + this.props.match.params.id + ".json")
                .then(response => {
                   this.setState({
                      loadedPost: response.data
