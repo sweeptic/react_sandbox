@@ -9,7 +9,9 @@ const FromServer = React.lazy(() => import('./FromServer'))
 
 const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
-const FullPost = React.lazy(() => import('./FullProductRoute'))
+// const FullPost = React.lazy(() => import('./FullProductRoute'))
+
+const ProductRoute = React.lazy(() => import('./ProductRoute'))
 
 const FromRedux = React.lazy(() => import('./FromRedux'))
 const FromForms = React.lazy(() => import('./FromForms'))
@@ -34,7 +36,9 @@ const NavbarComponent = () => {
 
                         <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>Data from server(fetch)</Nav.Link>
 
-                        <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Home</Nav.Link>
+                        {/* <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Home</Nav.Link> */}
+
+                        <Nav.Link as={NavLink} to="/posts/" exact activeStyle={myActiveStyle}>Home</Nav.Link>
 
 
                         <Nav.Link as={NavLink} to={{
@@ -44,7 +48,7 @@ const NavbarComponent = () => {
                         }} activeStyle={myActiveStyle}>New Post</Nav.Link>
 
 
-                        <Nav.Link as={NavLink} to="/:id" activeStyle={myActiveStyle}>FullPost</Nav.Link>
+                        {/* <Nav.Link as={NavLink} to="/:id" activeStyle={myActiveStyle}>FullPost</Nav.Link> */}
 
 
                         <Nav.Link as={NavLink} to="/link5/" activeStyle={myActiveStyle}>Forms</Nav.Link>
@@ -70,16 +74,17 @@ const NavbarComponent = () => {
             <Route path="/link3" render={() =>
                <Suspense fallback={<div>Loading...</div>}><FromServer /></Suspense>} />
 
-            <Route path="/link4" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromServerRoute /></Suspense>} />
 
-            <Route path="/new-post" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><NewPost /></Suspense>} />
 
-            <Route path="/:id" exact render={(props) =>
-               <Suspense fallback={<div>Loading...</div>}><FullPost {...props} /></Suspense>} />
 
-            {/* <Route path="/:id" exact component={FullPost} /> */}
+
+            {/* <Switch> */}
+            <Route path="/new-post" render={(props) =>
+               <Suspense fallback={<div>Loading...</div>}><NewPost  {...props}/></Suspense>} />
+
+            <Route path="/posts" render={(props) =>
+               <Suspense fallback={<div>Loading...</div>}><FromServerRoute {...props}/></Suspense>} />
+            {/* </Switch> */}
 
 
 

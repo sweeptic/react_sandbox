@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import ProductRoute from './ProductRoute'
-// import FullProductRoute from './FullProductRoute'
+import FullProductRoute from './FullProductRoute'
 // import NewProductRoute from './NewProductRoute'
 import Axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 
 export default class FromServerRoute extends Component {
    state = {
@@ -25,6 +25,7 @@ export default class FromServerRoute extends Component {
       this.setState({
          selectedProdId: id
       })
+     
    }
 
    deletePostHandler = (id) => {
@@ -47,27 +48,32 @@ export default class FromServerRoute extends Component {
 
       const products_ = products.map((item, index) => {
          return (
-         
-          <Link to={'/' + item.id} key={item.id} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 p-3">
+
+            // <Link to={'/' + item.id} key={item.id} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 p-3">
 
             <ProductRoute
                productName={item.productName}
-               key={index}
+               key={item.id}
                clicked={() => this.productSelectHandler(item.id)}
                deletePostHandler={this.deletePostHandler}
             />
-            
-          </Link>
+
+            // </Link>
 
          )
       })
 
       return (
-         <div className="container">
-            <div className="row">
-               {products_}
+        <div  >
+            <div>
+               <div className="row">
+                  {products_}
+               </div>
             </div>
-         </div>
+            <div className="container">
+               <Route path={this.props.match.url + '/:id'} exact component={FullProductRoute} />
+            </div>
+        </div>
       )
    }
 }
