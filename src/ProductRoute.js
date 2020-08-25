@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProductRoute = (props) => {
    return (
-      <div  onClick={props.clicked}>
+      <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 p-3" onClick={props.clicked}>
          <div className="h-100">
             <div style={{ minHeight: "55vh", maxHeight: "55vh", overflowY: "auto" }} className="card border border-dark bg-white m-3 p-3">
                <img className="card-img-top img-fluid" src="https://source.unsplash.com/random/301x200" alt={props.index} />

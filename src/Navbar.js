@@ -11,7 +11,7 @@ const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
 // const FullPost = React.lazy(() => import('./FullProductRoute'))
 
-const ProductRoute = React.lazy(() => import('./ProductRoute'))
+// const ProductRoute = React.lazy(() => import('./ProductRoute'))
 
 const FromRedux = React.lazy(() => import('./FromRedux'))
 const FromForms = React.lazy(() => import('./FromForms'))
@@ -65,39 +65,37 @@ const NavbarComponent = () => {
             </Navbar>
          </header>
 
-         <Switch>
-            <Route exact path="/" component={Homepage} />
-
-            <Route path="/link2" render={(props) =>
-               <Suspense fallback={<div>Loading...</div>}><FromLocal {...props} /></Suspense>} />
-
-            <Route path="/link3" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromServer /></Suspense>} />
+         <div className="container">
+            <Switch>
 
 
+               <Route exact path="/" component={Homepage} />
+
+               <Route path="/link2" render={(props) =>
+                  <Suspense fallback={<div>Loading...</div>}><FromLocal {...props} /></Suspense>} />
+
+               <Route path="/link3" render={() =>
+                  <Suspense fallback={<div>Loading...</div>}><FromServer /></Suspense>} />
+
+               <Route path="/new-post" render={(props) =>
+                  <Suspense fallback={<div>Loading...</div>}><NewPost  {...props} /></Suspense>} />
+
+               <Route path="/posts" render={(props) =>
+                  <Suspense fallback={<div>Loading...</div>}><FromServerRoute {...props} /></Suspense>} />
 
 
+               <Route path="/link5" render={() =>
+                  <Suspense fallback={<div>Loading...</div>}><FromForms /></Suspense>} />
 
-            {/* <Switch> */}
-            <Route path="/new-post" render={(props) =>
-               <Suspense fallback={<div>Loading...</div>}><NewPost  {...props}/></Suspense>} />
-
-            <Route path="/posts" render={(props) =>
-               <Suspense fallback={<div>Loading...</div>}><FromServerRoute {...props}/></Suspense>} />
-            {/* </Switch> */}
+               <Route path="/link6" render={() =>
+                  <Suspense fallback={<div>Loading...</div>}><FromRedux /></Suspense>} />
 
 
-
-            <Route path="/link5" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromForms /></Suspense>} />
-
-            <Route path="/link6" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromRedux /></Suspense>} />
+               <Route render={() => <h1>Not found</h1>} />
 
 
-            <Route render={() => <h1>Not found</h1>} />
-         </Switch>
-
+            </Switch>
+         </div>
       </React.Fragment>
    )
 }

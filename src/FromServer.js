@@ -56,7 +56,7 @@ export default class FromServer extends Component {
       })
 
       return (
-         <div className="container">
+         <div>
             <div className="row">
                {products_}
             </div>

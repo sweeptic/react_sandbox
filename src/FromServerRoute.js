@@ -3,12 +3,11 @@ import ProductRoute from './ProductRoute'
 import FullProductRoute from './FullProductRoute'
 // import NewProductRoute from './NewProductRoute'
 import Axios from 'axios'
-import { Link, Route } from 'react-router-dom'
+import {  Route } from 'react-router-dom'
 
 export default class FromServerRoute extends Component {
    state = {
-      products: [],
-      selectedProdId: null
+      products: []
    }
 
    componentDidMount() {
@@ -21,59 +20,50 @@ export default class FromServerRoute extends Component {
          })
    }
 
-   productSelectHandler = (id) => {
-      this.setState({
-         selectedProdId: id
-      })
-     
+
+   productSelectHandler = (id_) => {
+      this.props.history.push('/posts/' + id_);
    }
 
    deletePostHandler = (id) => {
       console.log('delete ', id);
-      Axios.delete("https://react-http-cec91.firebaseio.com/product/" + this.state.selectedProdId + ".json")
-         .then(response => {
-            console.log(response)
-         })
+      // Axios.delete("https://react-http-cec91.firebaseio.com/product/" + this.state.selectedProdId + ".json")
+      //    .then(response => {
+      //       console.log(response)
+      //    })
    }
 
    render() {
-      // console.log(this.state.products)
-
+      // console.log('render')
       const prod = this.state.products;
       let products = null;
       products = Object.keys(prod).map(item => prod[item])
 
-      // console.log(products)
-
 
       const products_ = products.map((item, index) => {
          return (
-
-            // <Link to={'/' + item.id} key={item.id} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 p-3">
-
             <ProductRoute
                productName={item.productName}
                key={item.id}
                clicked={() => this.productSelectHandler(item.id)}
                deletePostHandler={this.deletePostHandler}
             />
-
-            // </Link>
-
          )
       })
 
+       console.log(this.props.history)
+
       return (
-        <div  >
-            <div>
+         <div >
+            <div >
                <div className="row">
                   {products_}
                </div>
             </div>
-            <div className="container">
-               <Route path={this.props.match.url + '/:id'} exact component={FullProductRoute} />
+            <div >
+               <Route path={this.props.match.url + '/:abc_'} exact component={FullProductRoute} />
             </div>
-        </div>
+         </div>
       )
    }
 }

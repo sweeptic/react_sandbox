@@ -3,11 +3,16 @@ import NavbarComponent from './Navbar'
 
 
 export default class App extends Component {
+
+
+
   render() {
     return (
       <div>
-        <NavbarComponent/>
+        <NavbarComponent />
       </div>
     )
   }
 }
+
+

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 
 
 export default class NewProductRoute extends Component {
@@ -22,20 +22,16 @@ export default class NewProductRoute extends Component {
 
       Axios.post("https://react-http-cec91.firebaseio.com/product.json", data)
          .then(response => {
-            // console.log(response)
             this.props.history.push('/posts')
-            // this.setState({ submitted: true });
          })
    }
 
 
    render() {
       let redirect = null;
-      // if (this.state.submitted) {
-      //    redirect = <Redirect to="/posts" />;
-      // }
+
       return (
-         <div className="container">
+         <div>
             {redirect}
             <div className="card p-4 mt-3">
                <div className="card-body">
