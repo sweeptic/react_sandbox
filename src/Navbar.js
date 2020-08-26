@@ -2,17 +2,11 @@ import React, { Suspense } from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { NavLink, Switch, Route } from 'react-router-dom'
 import Homepage from './Homepage'
-// import FullPost from './FullProductRoute'
 
 const FromLocal = React.lazy(() => import('./FromLocal'))
 const FromServer = React.lazy(() => import('./FromServer'))
-
 const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
-// const FullPost = React.lazy(() => import('./FullProductRoute'))
-
-// const ProductRoute = React.lazy(() => import('./ProductRoute'))
-
 const FromRedux = React.lazy(() => import('./FromRedux'))
 const FromForms = React.lazy(() => import('./FromForms'))
 
@@ -26,38 +20,32 @@ const NavbarComponent = () => {
          <header style={{ paddingBottom: '70px' }}>
             <Navbar style={{ width: '100vw', overflowX: 'hidden' }} fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                <Container >
-                  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                  {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
                      <Nav className="ml-auto">
 
-                        <Nav.Link as={NavLink} to="/" exact activeStyle={myActiveStyle}>welcome</Nav.Link>
-                        <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>Data from local file(async)</Nav.Link>
-
-                        <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>Data from server(fetch)</Nav.Link>
-
-                        {/* <Nav.Link as={NavLink} to="/link4/" activeStyle={myActiveStyle}>Home</Nav.Link> */}
-
+                        <Nav.Link as={NavLink} to="/" exact activeStyle={myActiveStyle}>Welcome</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>From Local</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>From server</Nav.Link>
                         <Nav.Link as={NavLink} to="/posts/" exact activeStyle={myActiveStyle}>Home</Nav.Link>
 
-
-                        <Nav.Link as={NavLink} to={{
-                           pathname: '/new-post',
-                           hash: '#submit',
-                           search: '?quick-submit=true'
-                        }} activeStyle={myActiveStyle}>New Post</Nav.Link>
-
-
-                        {/* <Nav.Link as={NavLink} to="/:id" activeStyle={myActiveStyle}>FullPost</Nav.Link> */}
-
+                        <Nav.Link as={NavLink}
+                           to={{
+                              pathname: '/new-post',
+                              hash: '#submit',
+                              search: '?quick-submit=true'
+                           }}
+                           activeStyle={myActiveStyle}>New Post
+                        </Nav.Link>
 
                         <Nav.Link as={NavLink} to="/link5/" activeStyle={myActiveStyle}>Forms</Nav.Link>
                         <Nav.Link as={NavLink} to="/link6/" activeStyle={myActiveStyle}>Redux</Nav.Link>
-                        {/* <Nav.Link as={NavLink} activeStyle={myActiveStyle} to={{
-                           pathname: '/new-post',
-                           hash: '#submit',
-                           search: '?quick-submit=true'
-                        }}>New Post</Nav.Link> */}
+                        <Nav.Link as={NavLink} to="/link7/" activeStyle={myActiveStyle}>R. Adv</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link8/" activeStyle={myActiveStyle}>Auth</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link9/" activeStyle={myActiveStyle}>Anim</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Saga</Nav.Link>
+                        <Nav.Link as={NavLink} to="/link11/" activeStyle={myActiveStyle}>Hooks</Nav.Link>
 
                      </Nav>
                   </Navbar.Collapse>
@@ -83,7 +71,6 @@ const NavbarComponent = () => {
                <Route path="/posts" render={(props) =>
                   <Suspense fallback={<div>Loading...</div>}><FromServerRoute {...props} /></Suspense>} />
 
-
                <Route path="/link5" render={() =>
                   <Suspense fallback={<div>Loading...</div>}><FromForms /></Suspense>} />
 
@@ -91,9 +78,8 @@ const NavbarComponent = () => {
                   <Suspense fallback={<div>Loading...</div>}><FromRedux /></Suspense>} />
 
 
+               {/* 404 */}
                <Route render={() => <h1>Not found</h1>} />
-
-
             </Switch>
          </div>
       </React.Fragment>
