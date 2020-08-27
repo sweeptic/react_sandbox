@@ -32,16 +32,14 @@ const mapStateToProps = (state) => {
    return {
       prs: state.persons
    }
-
 }
+
 // redux dispatch action to this component props
 const mapDispatchToProps = (dispatch) => {
    return {
       onAddedPerson: (name, age) => dispatch({ type: actionTypes.ADD_PERSON, personData: { name: name, age: age } }),
 
       onRemovePerson: (id) => dispatch({ type: actionTypes.REMOVE_PERSON, id: id })
-
-
    }
 }
 

@@ -8,6 +8,7 @@ const FromServer = React.lazy(() => import('./FromServer'))
 const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
 const FromRedux = React.lazy(() => import('./FromRedux'))
+const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
 const FromForms = React.lazy(() => import('./FromForms'))
 
 
@@ -76,6 +77,9 @@ const NavbarComponent = () => {
 
                <Route path="/link6" render={() =>
                   <Suspense fallback={<div>Loading...</div>}><FromRedux /></Suspense>} />
+
+               <Route path="/link7" render={() =>
+                  <Suspense fallback={<div>Loading...</div>}><FromReduxAdv /></Suspense>} />
 
 
                {/* 404 */}

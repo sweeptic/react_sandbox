@@ -7,7 +7,6 @@ const initialState = {
 
 // this is the reducer
 const reducer = (state = initialState, action) => {
-   console.log(action)
    switch (action.type) {
       case actionTypes.ADD_PERSON:
          const newPerson = {
@@ -21,7 +20,6 @@ const reducer = (state = initialState, action) => {
          }
 
       case actionTypes.REMOVE_PERSON:
-         console.log(action.id)
          return {
             ...state,
             persons: state.persons.filter(item => item.id !== action.id)
@@ -31,7 +29,6 @@ const reducer = (state = initialState, action) => {
          return {
             ...state
          }
-
    }
 }
 
