@@ -21,8 +21,10 @@ const reducer = (state = initialState, action) => {
          }
 
       case actionTypes.REMOVE_PERSON:
+         console.log(action.id)
          return {
-            ...state
+            ...state,
+            persons: state.persons.filter(item => item.id !== action.id)
          }
 
       default:

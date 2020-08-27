@@ -8,13 +8,20 @@ class ReduxPersons extends Component {
    render() {
       return (
          <div>
+
+            {/* input box and button */}
             <AddPersonRedux personAdded={this.props.onAddedPerson} />
+
+            {/* person table */}
             {this.props.prs.map(person => (
                <PersonRedux
                   key={person.id}
                   name={person.name}
-                  age={person.age} />
+                  age={person.age}
+                  clicked={() => this.props.onRemovePerson(person.id)}
+               />
             ))}
+
          </div>
       )
    }
@@ -30,7 +37,11 @@ const mapStateToProps = (state) => {
 // redux dispatch action to this component props
 const mapDispatchToProps = (dispatch) => {
    return {
-      onAddedPerson: (name, age) => dispatch({ type: actionTypes.ADD_PERSON, personData: { name: name, age: age } })
+      onAddedPerson: (name, age) => dispatch({ type: actionTypes.ADD_PERSON, personData: { name: name, age: age } }),
+
+      onRemovePerson: (id) => dispatch({ type: actionTypes.REMOVE_PERSON, id: id })
+
+
    }
 }
 
