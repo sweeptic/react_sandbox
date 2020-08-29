@@ -9,6 +9,7 @@ const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
 const FromRedux = React.lazy(() => import('./FromRedux'))
 const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
+const FromAuth = React.lazy(() => import('./FromAuth'))
 const FromForms = React.lazy(() => import('./FromForms'))
 
 
@@ -24,7 +25,7 @@ const NavbarComponent = () => {
                   {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
-                     <Nav className="ml-auto">
+                     <Nav className="mx-auto">
 
                         <Nav.Link as={NavLink} to="/" exact activeStyle={myActiveStyle}>Welcome</Nav.Link>
                         <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>From Local</Nav.Link>
@@ -80,6 +81,9 @@ const NavbarComponent = () => {
 
                <Route path="/link7" render={() =>
                   <Suspense fallback={<div>Loading...</div>}><FromReduxAdv /></Suspense>} />
+
+               <Route path="/link8" render={() =>
+                  <Suspense fallback={<div>Loading...</div>}><FromAuth /></Suspense>} />
 
 
                {/* 404 */}
