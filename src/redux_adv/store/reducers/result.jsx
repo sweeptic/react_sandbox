@@ -14,7 +14,6 @@ const deleteResult = (state, action) => {
 const reducer = (state = initialState, action) => {
 
    switch (action.type) {
-      case actionTypes.STORE_RESULT:
       case actionTypes.STORE_RESULT: return updateObject(state, { results: state.results.concat({ id: Math.random(), value: action.result }) });
       case actionTypes.DELETE_RESULT: return deleteResult(state, action);
 

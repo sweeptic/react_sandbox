@@ -57,7 +57,7 @@ class fromAuth extends Component {
 
    submitHandler = (event) => {
       event.preventDefault();
-      this.props.onAuth(
+      this.props.onAuth_(
          this.state.controls.email.value,
          this.state.controls.password.value,
          this.state.controls.isSignUp)
@@ -111,7 +111,8 @@ class fromAuth extends Component {
 
 const mapDispatchToProps = dispatch => {
    return {
-      onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+      //1. onSubmit->submitHandler-> onAuth_ -> redux_actions - auth
+      onAuth_: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
    }
 }
 

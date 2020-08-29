@@ -15,6 +15,9 @@ import basicReducer from './redux/store/reducer'
 import counterReducer from './redux_adv/store/reducers/counter';
 import resultReducer from './redux_adv/store/reducers/result';
 
+//redux auth
+import authReducer from './redux_auth/Redux_reducer_auth';
+
 const logger = (store) => {
   return next => {
     return action => {
@@ -32,9 +35,10 @@ const rootReducer = combineReducers({
 
   //redux advanced for 'R. Adv' menu
   ctr: counterReducer,
-  res: resultReducer
+  res: resultReducer,
 
   //redux_auth
+  auth: authReducer
  
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
