@@ -4,13 +4,44 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-
-import { createStore } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './redux/store/reducer'
+import thunk from 'redux-thunk'
+
+//basic redux 
+import basicReducer from './redux/store/reducer'
+
+//redux advanced
+import counterReducer from './redux_adv/store/reducers/counter';
+import resultReducer from './redux_adv/store/reducers/result';
+
+const logger = (store) => {
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching', action);
+      const result = next(action);
+      console.log('[Middleware] next state', store.getState());
+      return result;
+    }
+  }
+}
+
+const rootReducer = combineReducers({
+  //basic redux for 'Redux' menu
+  bsc: basicReducer,
+
+  //redux advanced for 'R. Adv' menu
+  ctr: counterReducer,
+  res: resultReducer
+});
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>

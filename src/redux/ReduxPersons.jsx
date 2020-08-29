@@ -30,7 +30,7 @@ class ReduxPersons extends Component {
 // redux store state to this component props
 const mapStateToProps = (state) => {
    return {
-      prs: state.persons
+      prs: state.bsc.persons
    }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Input from './Input';
 import style from './ContactData.module.css'
-import { checkValidity } from './redux_adv/util/checkValidity';
+import { checkValidity } from './util/checkValidity';
 
 
 
