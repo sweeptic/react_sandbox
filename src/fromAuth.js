@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import Input from './Input';
 import { checkValidity } from './util/checkValidity';
 import { connect } from 'react-redux';
-import * as actions from './redux_auth/Redux_actions_index'
+import * as actions from './redux_auth/Redux_actions_index';
+import Spinner from './Spinner'
+
 
 class fromAuth extends Component {
 
@@ -80,7 +82,7 @@ class fromAuth extends Component {
       }
 
 
-      const form = formElementsArray.map(formElement => (
+      let form = formElementsArray.map(formElement => (
          <Input
             key={formElement.id}
             elementType={formElement.config.elementType}
@@ -93,9 +95,22 @@ class fromAuth extends Component {
          />
       ))
 
+      if (this.props.loading) {
+         form = <Spinner />
+      }
+
+      let errorMessage = null;
+
+      if (this.props.error) {
+         errorMessage = (
+            <p>{this.props.error.message}</p>
+         )
+      }
+
 
       return (
          <div className="style.Auth">
+            {errorMessage}
             <form onSubmit={this.submitHandler}>
                {form}
                <button>SUBMIT</button>
@@ -109,6 +124,13 @@ class fromAuth extends Component {
    }
 }
 
+const mapStateToProps = state => {
+   return {
+      loading: state.auth.loading,
+      error: state.auth.error
+   }
+}
+
 const mapDispatchToProps = dispatch => {
    return {
       //1. onSubmit->submitHandler-> onAuth_ -> redux_actions - auth
@@ -117,4 +139,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(null, mapDispatchToProps)(fromAuth); 
+export default connect(mapStateToProps, mapDispatchToProps)(fromAuth); 
