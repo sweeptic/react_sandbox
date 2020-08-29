@@ -33,14 +33,15 @@ const rootReducer = combineReducers({
   //redux advanced for 'R. Adv' menu
   ctr: counterReducer,
   res: resultReducer
+
+  //redux_auth
+ 
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 // const store = createStore(reducer);
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
-
-
 
 
 ReactDOM.render(
