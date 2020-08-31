@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { NavLink, Switch, Route } from 'react-router-dom'
 import Homepage from './Homepage'
+import LoginInfo from './LoginInfo'
 
 const FromLocal = React.lazy(() => import('./FromLocal'))
 const FromServer = React.lazy(() => import('./FromServer'))
@@ -9,7 +10,7 @@ const FromServerRoute = React.lazy(() => import('./FromServerRoute'))
 const NewPost = React.lazy(() => import('./NewProductRoute'))
 const FromRedux = React.lazy(() => import('./FromRedux'))
 const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
-const FromAuth = React.lazy(() => import('./FromAuth'))
+const FromAuth = React.lazy(() => import('./fromAuth'))
 const FromForms = React.lazy(() => import('./FromForms'))
 
 
@@ -30,7 +31,7 @@ const NavbarComponent = () => {
                         <Nav.Link as={NavLink} to="/" exact activeStyle={myActiveStyle}>Welcome</Nav.Link>
                         <Nav.Link as={NavLink} to="/link2/" activeStyle={myActiveStyle}>From Local</Nav.Link>
                         <Nav.Link as={NavLink} to="/link3/" activeStyle={myActiveStyle}>From server</Nav.Link>
-                        <Nav.Link as={NavLink} to="/posts/" exact activeStyle={myActiveStyle}>Home</Nav.Link>
+                        <Nav.Link as={NavLink} to="/posts/" exact activeStyle={myActiveStyle}>Router</Nav.Link>
 
                         <Nav.Link as={NavLink}
                            to={{
@@ -48,8 +49,8 @@ const NavbarComponent = () => {
                         <Nav.Link as={NavLink} to="/link9/" activeStyle={myActiveStyle}>Anim</Nav.Link>
                         <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Saga</Nav.Link>
                         <Nav.Link as={NavLink} to="/link11/" activeStyle={myActiveStyle}>Hooks</Nav.Link>
-
                      </Nav>
+                     <div><LoginInfo/></div>
                   </Navbar.Collapse>
                </Container>
             </Navbar>

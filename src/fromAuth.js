@@ -110,6 +110,7 @@ class fromAuth extends Component {
 
       return (
          <div className="style.Auth">
+            <h2>async actions - redux-thunk</h2>
             {errorMessage}
             <form onSubmit={this.submitHandler}>
                {form}

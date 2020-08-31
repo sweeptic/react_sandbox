@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Product from './Product'
 import FullProduct from './FullProduct'
 import NewProduct from './NewProduct'
 import Axios from 'axios'
+import ProductCard from './ProductCard'
 
 export default class FromServer extends Component {
    state = {
@@ -46,7 +46,7 @@ export default class FromServer extends Component {
 
       const products_ = products.map((item, index) => {
          return (
-            <Product
+            <ProductCard
                productName={item.productName}
                key={index}
                clicked={() => this.productSelectHandler(item.id)}
@@ -57,6 +57,7 @@ export default class FromServer extends Component {
 
       return (
          <div>
+            <h2>Data from server and without react-router</h2>
             <div className="row">
                {products_}
             </div>

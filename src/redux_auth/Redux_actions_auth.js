@@ -30,11 +30,11 @@ export const logout = () => {
 
 export const checkAuthTimeout = (expirationTime) => {
    // expirationTime = 5000 
-   console.log('logged out', expirationTime, ' millisec later..')
+   console.log('logged out', expirationTime * 1000, ' millisec later..')
    return dispatch => {
       setTimeout(() => {
          dispatch(logout());
-      }, expirationTime)
+      }, expirationTime * 1000) //3600000  millisec = 60 minute
    }
 }
 
