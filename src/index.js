@@ -7,7 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
+import { logger } from './util/logger';
 
+//*******************REDUCERS */
 //basic redux 
 import basicReducer from './redux/store/reducer'
 
@@ -18,16 +20,6 @@ import resultReducer from './redux_adv/store/reducers/result';
 //redux auth
 import authReducer from './redux_auth/Redux_reducer_auth';
 
-const logger = (store) => {
-  return next => {
-    return action => {
-      console.log('[Middleware] Dispatching', action);
-      const result = next(action);
-      console.log('[Middleware] next state', store.getState());
-      return result;
-    }
-  }
-}
 
 const rootReducer = combineReducers({
   //basic redux for 'Redux' menu
@@ -39,10 +31,9 @@ const rootReducer = combineReducers({
 
   //redux_auth
   auth: authReducer
- 
 });
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // const store = createStore(reducer);
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
@@ -50,13 +41,11 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, 
 
 ReactDOM.render(
   <React.StrictMode>
-
     <Provider store={store}>
       <BrowserRouter basename="/">
         <App />
       </BrowserRouter>
     </Provider>
-
   </React.StrictMode>,
   document.getElementById('root')
 );

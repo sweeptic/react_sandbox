@@ -1,5 +1,4 @@
 import * as actionTypes from './Redux_actiontypes'
-// import { authStart, authSuccess } from './Redux_actions_auth'
 
 //this is the state
 const initialState = {
@@ -9,7 +8,7 @@ const initialState = {
    loading: false
 }
 
-const authStart = (state = initialState, action) => {
+const authStart_ = (state = initialState, action) => {
    return {
       ...state,
       error: null,
@@ -18,6 +17,7 @@ const authStart = (state = initialState, action) => {
 }
 
 const authSuccess = (state = initialState, action) => {
+   // console.log('auth success')
    return {
       ...state,
       token: action.idToken,
@@ -28,6 +28,7 @@ const authSuccess = (state = initialState, action) => {
 }
 
 const authFail = (state = initialState, action) => {
+  
    return {
       ...state,
       token: action.idToken,
@@ -46,7 +47,7 @@ const authLogout = (state, action) => {
 
 const reducer = (state = initialState, action) => {
    switch (action.type) {
-      case actionTypes.AUTH_START: return authStart(state, action)
+      case actionTypes.AUTH_START: return authStart_(state, action)
       case actionTypes.AUTH_SUCCESS: return authSuccess(state, action)
       case actionTypes.AUTH_FAIL: return authFail(state, action)
       case actionTypes.AUTH_LOGOUT: return authLogout(state, action);

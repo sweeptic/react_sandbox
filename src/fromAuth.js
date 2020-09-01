@@ -71,6 +71,10 @@ class fromAuth extends Component {
       })
    }
 
+   signOutHandler = () => {
+      this.props.onLogout();
+   }
+
 
    render() {
       const formElementsArray = [];
@@ -120,6 +124,11 @@ class fromAuth extends Component {
             <button
                onClick={this.switchAuthModeHandler}
             >SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</button>
+            <hr />
+            <button
+               onClick={this.signOutHandler} >
+               Sign Out
+               </button>
          </div >
       )
    }
@@ -135,7 +144,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
    return {
       //1. onSubmit->submitHandler-> onAuth_ -> redux_actions - auth
-      onAuth_: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+      onAuth_: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp)),
+      onLogout: () => dispatch(actions.logout())
    }
 }
 
