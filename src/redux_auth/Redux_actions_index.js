@@ -2,5 +2,9 @@ export {
    auth,
    logout,
    authCheckState,
-   logoutSuccess
+   logoutSuccess,
+   authStart,
+   authSuccess,
+   authFail,
+   checkAuthTimeout
 } from './Redux_actions_auth'

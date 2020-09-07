@@ -1,37 +1,14 @@
 import * as actionTypes from './Redux_actiontypes'
-import axios from 'axios'
 
 
 // ******************************************Public interface to components
 //hold async code - used by redux-thunk
-export const auth = (email, password, isSignUp) => {
-   return dispatch => {
-      dispatch(authStart());  //start
-      const authData = {
-         email: email,
-         password: password,
-         returnSecureToken: true
-      }
-
-      let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB--v00MYbY8ryMblG80HhX4SHmgNf3l34';
-
-      if (!isSignUp) {
-         url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB--v00MYbY8ryMblG80HhX4SHmgNf3l34'
-      }
-
-      axios.post(url, authData)
-         .then(response => {
-            // console.log(response);
-            const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-            localStorage.setItem('token', response.data.idToken);
-            localStorage.setItem('expirationDate', expirationDate);
-            localStorage.setItem('userId', response.data.localId);
-            dispatch(authSuccess(response.data.idToken, response.data.localId));
-            dispatch(checkAuthTimeout(response.data.expiresIn));
-         })
-         .catch(err => {
-            dispatch(authFail(err.response.data.error));
-         })
+export const auth = (email, password, isSignup) => {
+   return {
+      type: actionTypes.AUTH_USER,
+      email: email,
+      password: password,
+      isSignup: isSignup
    }
 }
 
@@ -92,6 +69,6 @@ export const logoutSuccess = () => {
 export const checkAuthTimeout = (expirationTime) => {
    return {
       type: actionTypes.AUTH_CHECK_TIMEOUT,
-      expirationTime: expirationTime * 1000
+      expirationTime: expirationTime
    }
 }
