@@ -13,31 +13,18 @@ export const auth = (email, password, isSignup) => {
 }
 
 export const authCheckState = () => {
-   return dispatch => {
-      const token = localStorage.getItem('token')
-      if (!token) {
-         dispatch(logout());
-      } else {
-         const expirationDate = new Date(localStorage.getItem('expirationDate'));
-         if (expirationDate < new Date()) {
-            dispatch(logout());
-         } else {
-            const userId = localStorage.getItem('userId');
-            dispatch(authSuccess(token, userId));
-            dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-         }
-      }
+   return {
+      type: actionTypes.AUTH_CHECK_STATE
    }
 }
 
 export const logout = () => {
    return {
-      type: actionTypes.AUTH_SAGA_LOGOUT
+      type: actionTypes.AUTH_INITIATE_LOGOUT
    }
 }
 
 
-// ******************************************Non-public interface to components
 export const authStart = () => {
    return {
       type: actionTypes.AUTH_START
@@ -45,7 +32,6 @@ export const authStart = () => {
 }
 
 export const authSuccess = (token, userId) => {
-   // console.log('auth success')
    return {
       type: actionTypes.AUTH_SUCCESS,
       token: token,
