@@ -1,5 +1,6 @@
 export {
    auth,
    logout,
-   authCheckState
+   authCheckState,
+   logoutSuccess
 } from './Redux_actions_auth'

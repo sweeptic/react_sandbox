@@ -60,8 +60,6 @@ export const logout = () => {
 }
 
 
-
-
 // ******************************************Non-public interface to components
 export const authStart = () => {
    return {
@@ -85,12 +83,15 @@ export const authFail = (error) => {
    }
 }
 
+export const logoutSuccess = () => {
+   return {
+      type: actionTypes.AUTH_LOGOUT
+   }
+}
+
 export const checkAuthTimeout = (expirationTime) => {
-   // expirationTime = 5000 
-   // console.log('logged out', expirationTime * 1000, ' millisec later..')
-   return dispatch => {
-      setTimeout(() => {
-         dispatch(logout());
-      }, expirationTime * 1000) //3600000  millisec = 60 minute
+   return {
+      type: actionTypes.AUTH_CHECK_TIMEOUT,
+      expirationTime: expirationTime * 1000
    }
 }
