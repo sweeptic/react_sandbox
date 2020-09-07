@@ -20,6 +20,8 @@ import resultReducer from './redux_adv/store/reducers/result';
 //redux auth
 import authReducer from './redux_auth/Redux_reducer_auth';
 
+import createSagaMiddleware from 'redux-saga';
+import { watchAuth } from './saga/sagas_index';
 
 const rootReducer = combineReducers({
   //basic redux for 'Redux' menu
@@ -33,10 +35,15 @@ const rootReducer = combineReducers({
   auth: authReducer
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const sagaMiddleWare = createSagaMiddleware();
+
+const composeEnhancers = /*process.env.NODE_ENV === 'development' ?*/
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ //: null || compose;
 
 // const store = createStore(reducer);
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk, sagaMiddleWare)));
+
+sagaMiddleWare.run(watchAuth);
 
 
 ReactDOM.render(
