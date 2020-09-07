@@ -40,7 +40,7 @@ export const saveResult = (result) => {
 }
 
 export const storeResult = (result) => {
-   return dispatch => {
+   return dispatch => { //use redux thunk
       setTimeout(() => {
          dispatch(saveResult(result))
       }, 3000);
