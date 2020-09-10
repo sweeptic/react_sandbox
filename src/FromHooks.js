@@ -15,7 +15,6 @@ const FromHooks = props => {
       setTodoList(todoList.concat(todoName))
    }
 
-
    return (
       <React.Fragment>
          <h1>Hello from hooks</h1>
