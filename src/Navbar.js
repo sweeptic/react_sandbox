@@ -14,6 +14,7 @@ const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
 const FromAuth = React.lazy(() => import('./fromAuth'))
 const FromForms = React.lazy(() => import('./FromForms'))
 const FromAnim = React.lazy(() => import('./FromAnim'))
+const FromHooks = React.lazy(() => import('./FromHooks'))
 
 
 const NavbarComponent = (props) => {
@@ -73,6 +74,9 @@ const NavbarComponent = (props) => {
 
             <Route path="/link9" render={() =>
                <Suspense fallback={<div>Loading...</div>}><FromAnim /></Suspense>} />
+
+            <Route path="/link11" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromHooks /></Suspense>} />
 
             {/* 404 */}
             <Route render={() => <h1>Not found</h1>} />

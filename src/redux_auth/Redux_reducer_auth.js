@@ -17,7 +17,6 @@ const authStart_ = (state = initialState, action) => {
 }
 
 const authSuccess = (state = initialState, action) => {
-   // console.log('auth success')
    return {
       ...state,
       token: action.idToken,
@@ -36,6 +35,7 @@ const authFail = (state = initialState, action) => {
       loading: false
    }
 }
+
 
 const authLogout = (state, action) => {
    return {

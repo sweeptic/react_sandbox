@@ -23,7 +23,11 @@ export const logout = () => {
       type: actionTypes.AUTH_INITIATE_LOGOUT
    }
 }
-
+export const logoutSuccess = () => {
+   return {
+      type: actionTypes.AUTH_LOGOUT
+   }
+}
 
 export const authStart = () => {
    return {
@@ -46,11 +50,7 @@ export const authFail = (error) => {
    }
 }
 
-export const logoutSuccess = () => {
-   return {
-      type: actionTypes.AUTH_LOGOUT
-   }
-}
+
 
 export const checkAuthTimeout = (expirationTime) => {
    return {
