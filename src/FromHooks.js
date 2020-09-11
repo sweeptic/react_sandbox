@@ -10,7 +10,8 @@ const FromHooks = props => {
 
 
 
-   //component run for the first time
+   //component run for the first time and every render cycle
+   //2 arguments
    useEffect(() => {
       Axios.get('https://hooks-44d95.firebaseio.com/todos.json').then(result => {
          console.log(result);
@@ -21,7 +22,9 @@ const FromHooks = props => {
          }
          setTodoList(todos);
       })
-   })
+   }, []) //when this change ..
+   // replicate component did mount -> pass empty array
+   // replicate component did mount + did update pass [todoName]
 
    const inputChangeHandler = event => {
       setTodoName(event.target.value)
