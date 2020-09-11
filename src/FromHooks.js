@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import Axios from 'axios'
 
 const FromHooks = props => {
 
@@ -12,7 +13,14 @@ const FromHooks = props => {
    }
 
    const todoAddHandler = () => {
-      setTodoList(todoList.concat(todoName))
+      setTodoList(todoList.concat(todoName));
+      Axios.post('https://hooks-44d95.firebaseio.com/todos.json', { name: todoName })
+         .then(res => {
+            console.log(res)
+         })
+         .catch(err => {
+            console.log(err)
+         })
    }
 
    return (
