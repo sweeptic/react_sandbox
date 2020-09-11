@@ -1,12 +1,27 @@
 import React from 'react'
 import { useState } from 'react'
 import Axios from 'axios'
+import { useEffect } from 'react'
 
 const FromHooks = props => {
 
    const [todoName, setTodoName] = useState('')
    const [todoList, setTodoList] = useState([])
 
+
+
+   //component run for the first time
+   useEffect(() => {
+      Axios.get('https://hooks-44d95.firebaseio.com/todos.json').then(result => {
+         console.log(result);
+         const todoData = result.data;
+         const todos = []
+         for (const key in todoData) {
+            todos.push({ id: key, name: todoData[key].name })
+         }
+         setTodoList(todos);
+      })
+   })
 
    const inputChangeHandler = event => {
       setTodoName(event.target.value)
@@ -28,7 +43,7 @@ const FromHooks = props => {
          <h1>Hello from hooks</h1>
          <input onChange={inputChangeHandler} type="text" placeholder="Todo" value={todoName} />
          <button onClick={todoAddHandler} type="button">Add</button>
-         <ul>{todoList.map(i => <li key={Math.random()}>{i}</li>)}</ul>
+         <ul>{todoList.map(i => <li key={Math.random()}>{i.name}</li>)}</ul>
       </React.Fragment>
    )
 }
