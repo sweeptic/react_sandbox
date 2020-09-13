@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 const Todo = () => {
    const [todoName, setTodoName] = useState('');
    const [todoList, setTodoList] = useState([]);
+   const [submittedTodo, setSubmittedTodo] = useState(null);
 
 
    //component run for the first time and every render cycle
@@ -30,6 +31,9 @@ const Todo = () => {
    // replicate component did mount + did update pass [todoName]
 
 
+   useEffect(() => {
+      if (submittedTodo) { setTodoList(todoList.concat(submittedTodo)) }
+   }, [submittedTodo]);
 
    const inputChangeHandler = event => {
       // console.log(todoList)
@@ -37,10 +41,13 @@ const Todo = () => {
    }
 
    const todoAddHandler = () => {
-      setTodoList(todoList.concat(todoName));
+
       Axios.post('https://hooks-44d95.firebaseio.com/todos.json', { name: todoName })
          .then(res => {
-            console.log('Axios.post', res)
+            setTimeout(() => {
+               const todoItem = { id: res.data.name, name: todoName };
+               setSubmittedTodo(todoItem);
+            }, 3000);
          })
          .catch(err => {
             console.log(err)
