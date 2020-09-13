@@ -98,7 +98,7 @@ export default class FromForms extends Component {
       event.preventDefault();
    }
 
-  
+
    inputChangeHandler = (event, inputIdentifier) => {
 
       const updatedOrderForm = { ...this.state.orderForm };
@@ -135,17 +135,22 @@ export default class FromForms extends Component {
       let form = (
          <form onSubmit={this.orderHandler}>
 
-            {formElementsArray.map(formElement => (
-               <Input
-                  elementType={formElement.config.elementType}
-                  elementConfig={formElement.config.elementConfig}
-                  key={formElement.id}
-                  value={formElement.config.value}
-                  invalid={!formElement.config.valid}
-                  shouldValidate={formElement.config.validation}
-                  changed={(event) => this.inputChangeHandler(event, formElement.id)}
-                  touched={formElement.config.touched}
-               />)
+            {formElementsArray.map(formElement => {
+               console.log(formElement)
+               return (
+                  <Input
+                     elementType={formElement.config.elementType}
+                     elementConfig={formElement.config.elementConfig}
+                     key={formElement.id}
+                     value={formElement.config.value}
+                     invalid={!formElement.config.valid}
+                     shouldValidate={formElement.config.validation}
+                     changed={(event) => this.inputChangeHandler(event, formElement.id)}
+                     touched={formElement.config.touched}
+                  />
+               )
+            }
+
             )}
 
             <button disabled={!this.state.formIsValid}>ORDER</button>

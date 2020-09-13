@@ -14,7 +14,7 @@ const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
 const FromAuth = React.lazy(() => import('./fromAuth'))
 const FromForms = React.lazy(() => import('./FromForms'))
 const FromAnim = React.lazy(() => import('./FromAnim'))
-const FromHooks = React.lazy(() => import('./FromHooks'))
+const FromHooks = React.lazy(() => import('./hooks/FromHooks'))
 
 
 const NavbarComponent = (props) => {
