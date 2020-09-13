@@ -1,11 +1,13 @@
 import React from 'react'
-import { useEffect, useReducer, useRef } from 'react'
+import { useState, useEffect, useReducer, useRef } from 'react'
 import Axios from 'axios'
 import { todoListReducer } from './reducer'
+import List from './List'
 
 const Todo = () => {
 
    const [todoList, dispatch] = useReducer(todoListReducer, []);
+   const [inputIsValid, setInputIsValid] = useState(false);
    const todoInputRef = useRef();
    const URI = 'https://hooks-44d95.firebaseio.com/todos.json'
 
@@ -49,6 +51,13 @@ const Todo = () => {
          })
    }
 
+   const inputValidationHandler = (event) => {
+      if (event.target.value.trim() === '') {
+         setInputIsValid(false);
+      } else {
+         setInputIsValid(true);
+      }
+   }
 
    return (
       <React.Fragment>
@@ -56,14 +65,11 @@ const Todo = () => {
             type="text"
             placeholder="Todo"
             ref={todoInputRef}
+            onChange={inputValidationHandler}
+            style={{ backgroundColor: inputIsValid ? 'transparent' : 'red' }}
          />
          <button onClick={todoAddHandler} type="button">Add</button>
-         <ul>
-            {todoList.map(todo => {
-               console.log(todo)
-               return (<li onClick={() => todoRemoveHandler(todo.id)} key={Math.random()}>{todo.name}</li>)
-            })}
-         </ul>
+         <List items={todoList} onClick={todoRemoveHandler} />
       </React.Fragment>
    )
 }
