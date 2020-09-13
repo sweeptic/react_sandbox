@@ -1,12 +1,13 @@
 import React from 'react'
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useRef } from 'react'
 import Axios from 'axios'
+import { todoListReducer } from './reducer'
 
 const Todo = () => {
-   const [todoName, setTodoName] = useState('');
-   // const [todoList, setTodoList] = useState([]);
-   const [submittedTodo, setSubmittedTodo] = useState(null);
-   
+
+   // const [todoName, setTodoName] = useState('');
+   const [todoList, dispatch] = useReducer(todoListReducer, []);
+   const todoInputRef = useRef();
 
 
    //component run for the first time and every render cycle
@@ -31,42 +32,28 @@ const Todo = () => {
    // replicate component did mount + did update pass [todoName]
 
 
-   useEffect(() => {
-      if (submittedTodo) { 
-         dispatch({type: 'ADD', payload: submittedTodo})
-      }
-   }, [submittedTodo]);
+   // useEffect(() => {
+   //    if (submittedTodo) {
+   //       dispatch({ type: 'ADD', payload: submittedTodo })
+   //    }
+   // }, [submittedTodo]);
 
-   const inputChangeHandler = event => {
-      // console.log(todoList)
-      setTodoName(event.target.value)
-   }
+   // const inputChangeHandler = event => {
+   //    // console.log(todoList) 
+   //    setTodoName(event.target.value)
+   // }
 
-   const todoListReducer = (state, action) => {
-      switch (action.type) {
-         case 'ADD':
-            return state.concat(action.payload);
-
-         case 'SET':
-            return action.payload;
-
-         case 'REMOVE':
-            return state.filter((todo) => todo.id !== action.payload)
-
-         default:
-            return state
-      }
-   }
-
-   const [todoList, dispatch] = useReducer(todoListReducer, []);
 
    const todoAddHandler = () => {
+
+      const todoName = todoInputRef.current.value;
+
       Axios.post('https://hooks-44d95.firebaseio.com/todos.json', { name: todoName })
          .then(res => {
             setTimeout(() => {
                const todoItem = { id: res.data.name, name: todoName };
-               setSubmittedTodo(todoItem);
-            }, 3000);
+               dispatch({ type: 'ADD', payload: todoItem })
+            }, 30);
          })
          .catch(err => {
             console.log(err)
@@ -74,21 +61,31 @@ const Todo = () => {
    }
 
    const todoRemoveHandler = (todoId) => {
-
+      Axios.delete('https://hooks-44d95.firebaseio.com/todos.json', { id: todoId })
+         .then(res => {
+            dispatch({ type: 'REMOVE', payload: todoId })
+         })
+         .catch(err => {
+            console.log(err)
+         })
    }
 
 
    return (
-      <div>
-         <input onChange={inputChangeHandler} type="text" placeholder="Todo" value={todoName} />
+      <React.Fragment>
+         <input
+            type="text"
+            placeholder="Todo"
+            ref={todoInputRef}
+         />
          <button onClick={todoAddHandler} type="button">Add</button>
          <ul>
-            {todoList.map(i => {
-               console.log(i)
-               return (<li onClick={todoRemoveHandler} key={Math.random()}>{i.name}</li>)
+            {todoList.map(todo => {
+               console.log(todo)
+               return (<li onClick={() => todoRemoveHandler(todo.id)} key={Math.random()}>{todo.name}</li>)
             })}
          </ul>
-      </div>
+      </React.Fragment>
    )
 }
 
