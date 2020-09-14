@@ -14,7 +14,9 @@ const FromReduxAdv = React.lazy(() => import('./FromReduxAdv'))
 const FromAuth = React.lazy(() => import('./fromAuth'))
 const FromForms = React.lazy(() => import('./FromForms'))
 const FromAnim = React.lazy(() => import('./FromAnim'))
-const FromHooks = React.lazy(() => import('./hooks/FromHooks'))
+const FromHooks1 = React.lazy(() => import('./hooks1/FromHooks1'))
+const FromHooks2 = React.lazy(() => import('./hooks2/FromHooks2'))
+const FromHooks3 = React.lazy(() => import('./hooks3/FromHooks3'))
 
 
 const NavbarComponent = (props) => {
@@ -75,8 +77,14 @@ const NavbarComponent = (props) => {
             <Route path="/link9" render={() =>
                <Suspense fallback={<div>Loading...</div>}><FromAnim /></Suspense>} />
 
+            <Route path="/link10" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromHooks1 /></Suspense>} />
+
             <Route path="/link11" render={() =>
-               <Suspense fallback={<div>Loading...</div>}><FromHooks /></Suspense>} />
+               <Suspense fallback={<div>Loading...</div>}><FromHooks2 /></Suspense>} />
+
+            <Route path="/link12" render={() =>
+               <Suspense fallback={<div>Loading...</div>}><FromHooks3 /></Suspense>} />
 
             {/* 404 */}
             <Route render={() => <h1>Not found</h1>} />
@@ -105,8 +113,9 @@ const NavbarComponent = (props) => {
             <Nav.Link as={NavLink} to="/link7/" activeStyle={myActiveStyle}>R. Adv</Nav.Link>
             <Nav.Link as={NavLink} to="/link8/" activeStyle={myActiveStyle}>Auth</Nav.Link>
             <Nav.Link as={NavLink} to="/link9/" activeStyle={myActiveStyle}>Anim</Nav.Link>
-            <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Saga</Nav.Link>
-            <Nav.Link as={NavLink} to="/link11/" activeStyle={myActiveStyle}>Hooks</Nav.Link>
+            <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Hooks1</Nav.Link>
+            <Nav.Link as={NavLink} to="/link11/" activeStyle={myActiveStyle}>Hooks2</Nav.Link>
+            <Nav.Link as={NavLink} to="/link12/" activeStyle={myActiveStyle}>Hooks3</Nav.Link>
          </Nav>
       )
    }

@@ -115,6 +115,7 @@ class fromAuth extends Component {
       return (
          <div className="style.Auth">
             <h2>async actions - redux-thunk</h2>
+            <h3>get token from server and store browser localstorage - settimeout to 1 hr</h3>
             {errorMessage}
             <form onSubmit={this.submitHandler}>
                {form}
