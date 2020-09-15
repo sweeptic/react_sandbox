@@ -1,11 +1,9 @@
 import React from 'react'
+import style from './FromHooks.module.css';
+import Ingredients from './components/Ingredients/Ingredients';
 
 const FromHooks1 = () => {
-   return (
-      <div>
-         hello from hooks 1
-      </div>
-   )
+   return <Ingredients />;
 }
 
 export default FromHooks1

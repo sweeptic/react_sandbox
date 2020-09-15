@@ -113,7 +113,7 @@ const NavbarComponent = (props) => {
             <Nav.Link as={NavLink} to="/link7/" activeStyle={myActiveStyle}>R. Adv</Nav.Link>
             <Nav.Link as={NavLink} to="/link8/" activeStyle={myActiveStyle}>Auth</Nav.Link>
             <Nav.Link as={NavLink} to="/link9/" activeStyle={myActiveStyle}>Anim</Nav.Link>
-            <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Hooks1</Nav.Link>
+            <Nav.Link as={NavLink} to="/link10/" activeStyle={myActiveStyle}>Ingredients</Nav.Link>
             <Nav.Link as={NavLink} to="/link11/" activeStyle={myActiveStyle}>Hooks2</Nav.Link>
             <Nav.Link as={NavLink} to="/link12/" activeStyle={myActiveStyle}>Hooks3</Nav.Link>
          </Nav>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useRef, useMemo } from 'react';
+import React, {  useEffect, useReducer,  useMemo } from 'react';
 import axios from 'axios';
 import List from './List';
 import { todoListReducer } from './Reducer'
@@ -6,7 +6,7 @@ import { useFormInput } from './forms';
 
 
 const Todo = props => {
-   const [inputIsValid, setInputIsValid] = useState(false);
+   // const [inputIsValid, setInputIsValid] = useState(false);
    const [todoList, dispatch] = useReducer(todoListReducer, []);
    // const todoInputRef = useRef();
    const todoInput = useFormInput();
