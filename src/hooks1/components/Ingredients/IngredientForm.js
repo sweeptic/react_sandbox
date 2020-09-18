@@ -12,7 +12,7 @@ const IngredientForm = React.memo(props => {
   //react manages detach this, therefore this state will survive re renders. 
 
   //second element: functions what use for update the state. dispatch ----
-  const inputState = useState({ title: '', amount: '' })
+  const [inputState, setInputState] = useState({ title: '', amount: '' })
 
   const submitHandler = event => {
     event.preventDefault();
@@ -27,8 +27,17 @@ const IngredientForm = React.memo(props => {
             <input
               type="text"
               id="title"
-              value={inputState[0].title}
-              onChange={event => inputState[1]({ title: event.target.value })}
+              value={inputState.title}
+              onChange={event => {
+                const newTitle = event.target.value;
+                setInputState((prevInputState) => {
+                  return ({
+                    amount: prevInputState.amount, //react dont guarantee this  will be latest
+                    title: newTitle
+                  })
+                })
+              }
+              }
             />
           </div>
           <div className={style.formControl}>
@@ -36,8 +45,18 @@ const IngredientForm = React.memo(props => {
             <input
               type="number"
               id="amount"
-              value={inputState[0].amount}
-              onChange={event => inputState[1]({ amount: event.target.value })}
+              value={inputState.amount}
+              onChange={event => {
+                const newAmount = event.target.value;
+                setInputState((prevInputState) => {
+                  return ({
+                    amount: event.target.value, //react dont guarantee this  will be latest
+                    title: prevInputState.title
+                  })
+                })
+              }
+              }
+
             />
           </div>
           <div className={style.ingredientForm__actions}>
