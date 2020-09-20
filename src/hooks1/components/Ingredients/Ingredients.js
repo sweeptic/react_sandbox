@@ -33,12 +33,13 @@ const Ingredients = () => {
       })
   }, []) //<- external depedency (did mount)
 
-
   useEffect(() => {
     console.log('RENDERING INGREDIENTS')
-   })
+  })
 
-
+  const filteredIngredientHandler = (filteredIngredients) => {
+    setUserIngredients(filteredIngredients)
+  }
 
   const addIngredientHandler = ingredient => {
     fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
@@ -67,7 +68,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientHandler} />
         < IngredientList ingredients={userIngredients} onRemoveItem={onRemoveItem} />
         {/* Need to add list here! */}
       </section>
