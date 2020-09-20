@@ -1,35 +1,51 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import Card from '../UI/Card';
 import style from './Search.module.css';
 
 const Search = React.memo(props => {
 
-  const { onLoadIngredients } = props
-
-  const [enteredFilter, setEnteredFilter] = useState('')
+  const { onLoadIngredients } = props;
+  const [enteredFilter, setEnteredFilter] = useState('');
+  const inputRef = useRef()
 
   useEffect(() => {
-    const query = enteredFilter.length === 0 ? '' : `?orderBy="title"&equalTo="${enteredFilter}"`;
-    fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json' + query)
-      .then(response => response.json())
-      .then(responseData => {
+    console.log('useeffect')
 
-        const loadedingredients = []
-        for (const key in responseData) {
-          if (responseData.hasOwnProperty(key)) {
-            loadedingredients.push(
-              {
-                id: key,
-                title: responseData[key].title,
-                amount: responseData[key].amount,
-              });
-          }
-        }
-        onLoadIngredients(loadedingredients)
-      })
-  }, [enteredFilter, onLoadIngredients])
+    setTimeout(() => {
+
+      // enteredFilter <- this is closure. the enteredfilter value 500ms ago ..
+      if (enteredFilter === inputRef.current.value) {
+
+
+        console.log('enteredfilter: ', enteredFilter);
+
+
+        const query = enteredFilter.length === 0 ? '' : `?orderBy="title"&equalTo="${enteredFilter}"`;
+        fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json' + query)
+          .then(response => response.json())
+          .then(responseData => {
+            const loadedingredients = []
+            for (const key in responseData) {
+              if (responseData.hasOwnProperty(key)) {
+                loadedingredients.push(
+                  {
+                    id: key,
+                    title: responseData[key].title,
+                    amount: responseData[key].amount,
+                  });
+              }
+            }
+            onLoadIngredients(loadedingredients)
+          })
+      }
+    }, 500);
+
+
+  }, [enteredFilter, onLoadIngredients, useRef])
+
+
 
 
 
@@ -39,6 +55,7 @@ const Search = React.memo(props => {
         <div className={style.searchInput}>
           <label>Filter by Title</label>
           <input
+            ref={inputRef}
             type="text"
             value={enteredFilter}
             onChange={(event) => setEnteredFilter(event.target.value)} />
