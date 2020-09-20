@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import Search from './Search';
@@ -11,35 +11,37 @@ const Ingredients = () => {
 
   //use effect - manage side effect
 
-  //after every render cycle  - component did update
-  useEffect(() => {
-    fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json')
-      .then(response => response.json())
-      .then(responseData => {
-        // console.log(responseData)
-        const loadedingredients = []
-        for (const key in responseData) {
-          if (responseData.hasOwnProperty(key)) {
-            loadedingredients.push(
-              {
-                id: key,
-                title: responseData[key].title,
-                amount: responseData[key].amount,
-              });
-          }
-        }
-        console.log(loadedingredients)
-        setUserIngredients(loadedingredients);
-      })
-  }, []) //<- external depedency (did mount)
+  // //after every render cycle  - component did update
+  // useEffect(() => {
+  //   fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json')
+  //     .then(response => response.json())
+  //     .then(responseData => {
+  //       // console.log(responseData)
+  //       const loadedingredients = []
+  //       for (const key in responseData) {
+  //         if (responseData.hasOwnProperty(key)) {
+  //           loadedingredients.push(
+  //             {
+  //               id: key,
+  //               title: responseData[key].title,
+  //               amount: responseData[key].amount,
+  //             });
+  //         }
+  //       }
+  //       console.log(loadedingredients)
+  //       setUserIngredients(loadedingredients);
+  //     })
+  // }, []) //<- external depedency (did mount) // now there is dont have any depedencyes
 
   useEffect(() => {
-    console.log('RENDERING INGREDIENTS')
-  })
+    console.log('RENDERING INGREDIENTS', userIngredients)
+  }, [userIngredients])
 
-  const filteredIngredientHandler = (filteredIngredients) => {
+
+  //cache callback function and survive render cycles
+  const filteredIngredientHandler = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients)
-  }
+  }, [])  //  <-this never change
 
   const addIngredientHandler = ingredient => {
     fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
