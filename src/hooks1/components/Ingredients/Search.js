@@ -11,17 +11,15 @@ const Search = React.memo(props => {
   const inputRef = useRef()
 
   useEffect(() => {
-    console.log('useeffect')
+    
 
-    setTimeout(() => {
-
+    //ha van következo keystroke,  akkor torli az elozot.
+    //ha 500ms beluli keystroke van. ha varunk, akkor az utolso 500ms utan lefut.
+    const timer = setTimeout(() => {
+      console.log('set timeout')
       // enteredFilter <- this is closure. the enteredfilter value 500ms ago ..
       if (enteredFilter === inputRef.current.value) {
-
-
         console.log('enteredfilter: ', enteredFilter);
-
-
         const query = enteredFilter.length === 0 ? '' : `?orderBy="title"&equalTo="${enteredFilter}"`;
         fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json' + query)
           .then(response => response.json())
@@ -42,6 +40,13 @@ const Search = React.memo(props => {
       }
     }, 500);
 
+
+    //can return something. it will be function. this is a cleanup function
+    //will run before next use effect function run next time.
+    //if return [] <- run when component gets unmounted.
+    return () => {
+      clearTimeout(timer);
+    }
 
   }, [enteredFilter, onLoadIngredients, useRef])
 
