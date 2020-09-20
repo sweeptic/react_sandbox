@@ -60,8 +60,14 @@ const Ingredients = () => {
       })
   }
 
-  const onRemoveItem = (id) => {
-    setUserIngredients(prevIngredients => prevIngredients.filter(item => item.id !== id))
+  const onRemoveItem = (ingredientId) => {
+
+    fetch(`https://react-hooks-update-7337b.firebaseio.com/ingredients/${ingredientId}.json`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        setUserIngredients(prevIngredients => prevIngredients.filter(item => item.id !== ingredientId))
+      })
   }
 
   return (
