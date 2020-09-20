@@ -31,10 +31,12 @@ const Ingredients = () => {
         console.log(loadedingredients)
         setUserIngredients(loadedingredients);
       })
-  }, []) //<- external depedency
+  }, []) //<- external depedency (did mount)
 
 
-
+  useEffect(() => {
+    console.log('RENDERING INGREDIENTS')
+   })
 
 
 
