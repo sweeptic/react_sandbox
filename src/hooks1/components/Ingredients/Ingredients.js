@@ -2,12 +2,14 @@
 
 // useCallback - used to save a function
 // useMemo - used to save a value
-import React, { useEffect, useCallback, useReducer } from 'react';
+import React, { useEffect, useCallback, useReducer, useMemo } from 'react';
 import IngredientForm from './IngredientForm';
 import Search from './Search';
 // import { useState } from 'react';
 import IngredientList from './IngredientList';
 import ErrorModal from '../UI/ErrorModal';
+import useHttp from '../../hooks/http';
+
 
 const initialState = [];
 
@@ -25,29 +27,12 @@ const ingredientReducer = (currentIngredients, action) => {
   }
 }
 
-//three state - send, response, delete
-//reducer for UI -  loading spinner or error
-const httpReducer = (currHttpState, action) => {
-  switch (action.type) {
-    case 'SEND':
-      return { loading: true, error: null }
-    case 'RESPONSE':
-      return { ...currHttpState, loading: false }
-    case 'ERROR':
-      return { loading: false, error: action.errorMessage }
-    case 'CLEAR':
-      return { ...currHttpState, error: null }
-    default:
-      throw new Error('Should not get there')
-
-  }
-}
-
 
 const Ingredients = () => {
 
   const [userIngredients, dispatch] = useReducer(ingredientReducer, initialState);
-  const [httpState, dispatchHttp] = useReducer(httpReducer, { loading: false, errorMessage: null });
+  const { isLoading, error, data, sendRequest } = useHttp();
+
 
   // const [userIngredients, setUserIngredients] = useState([]); // loaded / add / delete data
   // const [isLoading, setIsLoading] = useState(false);
@@ -90,49 +75,40 @@ const Ingredients = () => {
 
   //no external depedencies
   const addIngredientHandler = useCallback(ingredient => {
-    dispatchHttp({ type: 'SEND' });
-    fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
-      method: 'POST',
-      body: JSON.stringify(ingredient),
-      headers: { 'Content-type': 'application/json' }
-    })
-      .then(response => {
-        dispatchHttp({ type: 'RESPONSE' });
-        return response.json()
-      })
-      .then(responseData => {
-        //   setUserIngredients(prevIngredients => [
-        //     ...prevIngredients,
-        //     { id: responseData.name, ...ingredient }
-        //   ])
-        dispatch({ type: 'ADD', ingredient: { id: responseData.name, ...ingredient } })
-      })
+    // dispatchHttp({ type: 'SEND' });
+    // fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
+    //   method: 'POST',
+    //   body: JSON.stringify(ingredient),
+    //   headers: { 'Content-type': 'application/json' }
+    // })
+    //   .then(response => {
+    //     dispatchHttp({ type: 'RESPONSE' });
+    //     return response.json()
+    //   })
+    //   .then(responseData => {
+    //     //   setUserIngredients(prevIngredients => [
+    //     //     ...prevIngredients,
+    //     //     { id: responseData.name, ...ingredient }
+    //     //   ])
+    //     dispatch({ type: 'ADD', ingredient: { id: responseData.name, ...ingredient } })
+    //   })
   }, [])
 
   const RemoveIngredientHandler = useCallback((ingredientId) => {
-    dispatchHttp({ type: 'SEND' });
-    fetch(`https://react-hooks-update-7337b.firebaseio.com/ingredients/${ingredientId}.json`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        dispatchHttp({ type: 'RESPONSE' });
-        // setUserIngredients(prevIngredients => prevIngredients.filter(item => item.id !== ingredientId))
-        dispatch({ type: 'DELETE', id: ingredientId })
-      })
-      .catch((error) => {
-        // setError(error.message)
-        dispatchHttp({ type: 'ERROR', errorMessage: 'Something went wrong' });
-      })
-  }, [])
+    // dispatchHttp({ type: 'SEND' });
+    sendRequest(
+      `https://react-hooks-update-7337b.firebaseio.com/${ingredientId}.json`,
+      'DELETE')
+  }, [sendRequest])
 
 
   //react batches this state update
   const clearError = useCallback(() => {
-    dispatchHttp({ type: 'CLEAR' });
+    // dispatchHttp({ type: 'CLEAR' });
     // setError(null);
     // setIsLoading(false);
     //synchronously after each other .and one render cycle update both updates.
-  },[])
+  }, [])
 
   //storing components -React.memo
   //storing any data - useMemo. dont want to recreate every render cycle
@@ -154,9 +130,12 @@ const Ingredients = () => {
 
   return (
     <div className="App">
-      {httpState.error && <ErrorModal onClose={clearError} >{httpState.error}</ErrorModal>}
+      {error && <ErrorModal onClose={clearError} >{error}</ErrorModal>}
 
-      <IngredientForm onAddIngredient={addIngredientHandler} loading={httpState.loading} />
+      <IngredientForm
+        onAddIngredient={addIngredientHandler}
+        loading={isLoading}
+      />
 
 
       <section>

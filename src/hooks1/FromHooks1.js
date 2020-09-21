@@ -1,6 +1,6 @@
 import React from 'react'
-import style from './FromHooks.module.css';
-import Auth from './components/Auth';
+import  './FromHooks.css';
+// import Auth from './components/Auth';
 import AuthContextProvider from './components/context/auth-context';
 import IngredientsApp from './IngredientsApp';
 

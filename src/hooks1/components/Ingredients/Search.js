@@ -17,10 +17,10 @@ const Search = React.memo(props => {
     //ha van következo keystroke,  akkor torli az elozot.
     //ha 500ms beluli keystroke van. ha varunk, akkor az utolso 500ms utan lefut.
     const timer = setTimeout(() => {
-      console.log('set timeout')
+      // console.log('set timeout')
       // enteredFilter <- this is closure. the enteredfilter value 500ms ago ..
       if (enteredFilter === inputRef.current.value) {
-        console.log('enteredfilter: ', enteredFilter);
+        // console.log('enteredfilter: ', enteredFilter);
         const query = enteredFilter.length === 0 ? '' : `?orderBy="title"&equalTo="${enteredFilter}"`;
         fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json' + query)
           .then(response => response.json())
@@ -49,7 +49,7 @@ const Search = React.memo(props => {
       clearTimeout(timer);
     }
 
-  }, [enteredFilter, onLoadIngredients, useRef])
+  }, [enteredFilter, onLoadIngredients, inputRef])
 
 
 
