@@ -1,3 +1,7 @@
+
+
+// useCallback - used to save a function
+// useMemo - used to save a value
 import React, { useEffect, useCallback, useReducer } from 'react';
 import IngredientForm from './IngredientForm';
 import Search from './Search';
@@ -84,7 +88,8 @@ const Ingredients = () => {
     dispatch({ type: 'SET', ingredients: filteredIngredients })
   }, [])  //  <-this never change
 
-  const addIngredientHandler = ingredient => {
+  //no external depedencies
+  const addIngredientHandler = useCallback(ingredient => {
     dispatchHttp({ type: 'SEND' });
     fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
       method: 'POST',
@@ -102,9 +107,9 @@ const Ingredients = () => {
         //   ])
         dispatch({ type: 'ADD', ingredient: { id: responseData.name, ...ingredient } })
       })
-  }
+  }, [])
 
-  const onRemoveItem = (ingredientId) => {
+  const RemoveIngredientHandler = useCallback((ingredientId) => {
     dispatchHttp({ type: 'SEND' });
     fetch(`https://react-hooks-update-7337b.firebaseio.com/ingredients/${ingredientId}.json`, {
       method: 'DELETE',
@@ -118,15 +123,33 @@ const Ingredients = () => {
         // setError(error.message)
         dispatchHttp({ type: 'ERROR', errorMessage: 'Something went wrong' });
       })
-  }
+  }, [])
+
 
   //react batches this state update
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatchHttp({ type: 'CLEAR' });
     // setError(null);
     // setIsLoading(false);
     //synchronously after each other .and one render cycle update both updates.
-  }
+  },[])
+
+  //storing components -React.memo
+  //storing any data - useMemo. dont want to recreate every render cycle
+
+  const ingredientList = useMemo(  //<-finction
+
+    // this function not to memoize.
+    // this function return a value should be memo!
+    () => {
+      return (
+        //return memoized object ! []-tells react when change, then re create value
+        < IngredientList
+          ingredients={userIngredients}
+          onRemoveItem={RemoveIngredientHandler}
+        />
+      )
+    }, [userIngredients, RemoveIngredientHandler]) // list of depedencies. tells react when this change then create a new object. (ingredientList)
 
 
   return (
@@ -134,11 +157,18 @@ const Ingredients = () => {
       {httpState.error && <ErrorModal onClose={clearError} >{httpState.error}</ErrorModal>}
 
       <IngredientForm onAddIngredient={addIngredientHandler} loading={httpState.loading} />
+
+
       <section>
         <Search onLoadIngredients={filteredIngredientHandler} />
-        < IngredientList ingredients={userIngredients} onRemoveItem={onRemoveItem} />
+        {ingredientList}
+
+        {/* not need render when load spinner is showed */}
+
         {/* Need to add list here! */}
       </section>
+
+
     </div>
   );
 }
