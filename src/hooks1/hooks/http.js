@@ -8,9 +8,9 @@ import { useCallback, useReducer } from "react"
 const httpReducer = (currHttpState, action) => {
    switch (action.type) {
       case 'SEND':
-         return { loading: true, error: null, data: null }
+         return { loading: true, error: null, data: null, extra: null, identifier: action.identifier }
       case 'RESPONSE':
-         return { ...currHttpState, loading: false, data: action.responseData }
+         return { ...currHttpState, loading: false, data: action.responseData, extra: action.extra }
       case 'ERROR':
          return { loading: false, error: action.errorMessage }
       case 'CLEAR':
@@ -26,17 +26,19 @@ const httpReducer = (currHttpState, action) => {
 
 //just HTTP request not what we do with the response ( delete)
 //this  re-run every re render cycle
-const useHttp = () => {
+const useHttp = () => {                //THIS IS THE HOOK
    const [httpState, dispatchHttp] = useReducer(httpReducer, {
       loading: false,
       errorMessage: null,
-      data: null
+      data: null,
+      extra: null,
+      identifier: null
    });
 
    //http req depends on outside
-   const sendRequest = useCallback((url, method, body) => {
+   const sendRequest = useCallback((url, method, body, reqExtra, reqIdentifier) => {
       // fetch(`https://react-hooks-update-7337b.firebaseio.com/ingredients/${ingredientId}.json`, {
-      dispatchHttp({ type: 'SEND' });
+      dispatchHttp({ type: 'SEND', identifier: reqIdentifier });
       //flexible http request
       fetch(
          url,
@@ -51,10 +53,12 @@ const useHttp = () => {
          .then(response => {
             return response.json()
          })
-
-
          .then((responseData) => {
-            dispatchHttp({ type: 'RESPONSE', responseData: responseData });
+            dispatchHttp({
+               type: 'RESPONSE',
+               responseData: responseData,
+               extra: reqExtra
+            });
             // setUserIngredients(prevIngredients => prevIngredients.filter(item => item.id !== ingredientId))
             // dispatch({ type: 'DELETE', id: ingredientId })
          })
@@ -69,7 +73,9 @@ const useHttp = () => {
       isLoading: httpState.loading,
       data: httpState,
       error: httpState.error,
-      sendRequest: sendRequest
+      sendRequest: sendRequest,
+      reqExtra: httpState.extra,
+      reqIdentifier: httpState.identifier
    }
 
 }

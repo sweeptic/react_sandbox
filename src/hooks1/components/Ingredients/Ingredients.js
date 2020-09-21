@@ -31,7 +31,9 @@ const ingredientReducer = (currentIngredients, action) => {
 const Ingredients = () => {
 
   const [userIngredients, dispatch] = useReducer(ingredientReducer, initialState);
-  const { isLoading, error, data, sendRequest } = useHttp();
+
+  // sendrequest -> ... -> dispatch response -> update the state -> re build itself - Ingredients
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier } = useHttp();
 
 
   // const [userIngredients, setUserIngredients] = useState([]); // loaded / add / delete data
@@ -63,8 +65,17 @@ const Ingredients = () => {
   // }, []) //<- external depedency (did mount) // now there is dont have any depedencyes
 
   useEffect(() => {
-    console.log('RENDERING INGREDIENTS', userIngredients)
-  }, [userIngredients])
+
+    if (!isLoading && !error && reqIdentifier === 'REMOVE_INGREDIENT') {
+      dispatch({ type: 'DELETE', id: reqExtra })
+      // console.log('RENDERING INGREDIENTS', userIngredients)
+    } else if (!isLoading && !error && reqIdentifier === 'ADD_INGREDIENT') {
+      dispatch({
+        type: 'ADD',
+        ingredient: { id: data.name, ...reqExtra }
+      })
+    }
+  }, [data, reqExtra, reqIdentifier, isLoading, error])
 
 
   //cache callback function and survive render cycles
@@ -75,6 +86,15 @@ const Ingredients = () => {
 
   //no external depedencies
   const addIngredientHandler = useCallback(ingredient => {
+
+    //function coming from hook
+    sendRequest(
+      `https://react-hooks-update-7337b.firebaseio.com/ingredients.json`,
+      'POST',
+      JSON.stringify(ingredient),
+      ingredient,
+      'ADD_INGREDIENT'
+    );
     // dispatchHttp({ type: 'SEND' });
     // fetch('https://react-hooks-update-7337b.firebaseio.com/ingredients.json', {
     //   method: 'POST',
@@ -92,13 +112,16 @@ const Ingredients = () => {
     //     //   ])
     //     dispatch({ type: 'ADD', ingredient: { id: responseData.name, ...ingredient } })
     //   })
-  }, [])
+  }, [sendRequest])
 
   const RemoveIngredientHandler = useCallback((ingredientId) => {
     // dispatchHttp({ type: 'SEND' });
     sendRequest(
       `https://react-hooks-update-7337b.firebaseio.com/${ingredientId}.json`,
-      'DELETE')
+      'DELETE',
+      null,
+      ingredientId,
+      'REMOVE_INGREDIENT')
   }, [sendRequest])
 
 
